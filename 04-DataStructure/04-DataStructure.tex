@@ -9,7 +9,7 @@ The reconstruction code makes no direct reference to the Monte Carlo information
 
 \begin{figure}[bt]
   \begin{center}
-    \includegraphics[width=25pc]{04-DataStructure/DataStructureSimple2014.pdf}
+    \includegraphics[width=25pc]{04-DataStructure/DataStructureSimple2016.pdf}
     \caption{\label{figureDataStructure}The tracker software data structure, and relevant MAUS data structure.  The spill is the top level object below which data is split into real data, MC data and reconstruction sides. When an object owns the memory of a set of other objects, these are held as standard vectors of pointers. When an object contains cross links to another set of objects, without owning their memory, these are held as a ROOT TRefArray of pointers. SPR = Straight Pattern Recognition, HPR = Helical Pattern Recognition.}
   \end{center}
 \end{figure}
@@ -30,6 +30,6 @@ The reconstructed data for the tracker is held in the SciFiEvent class.  This co
 
 \subsection{Cross links and the Monte Carlo - Reconstruction bridge}
 \label{subsec:CrossLinksAndMCBridge}
-Each higher level object also contains cross links in the form of pointers back to the objects within the SciFiEvent which were used to create it; thus Clusters contain pointers to Digits, Spacepoints to Clusters, and pattern recognition tracks to Spacepoints. The SciFiTracks are slightly different, with the SciFiTrackPoints containing a link back to the Cluster which produced them. In this manner all higher level objects can be traced back fully to the original Digits.  
+Each higher level object also contains cross links in the form of pointers back to the objects within the SciFiEvent which were used to create it; thus Clusters contain pointers to Digits, Spacepoints to Clusters, Pattern Recognition Tracks to Spacepoints, and SciFiTracks to Pattern Recognition Tracks. In this manner all higher level objects can be traced back fully to the original Digits.  
 
 In the case of a Monte Carlo run the Digits themselves are linked via an ID number and lookup table back to the Monte Carlo hits used to produce them. The ID is defined as \textit{tspccc}, where \textit{t} is the tracker number, \textit{s} is the station number, \textit{p} is the plane number, and \textit{c} is the channel number.  This structure means the reconstruction branch has no direct reference to the Monte Carlo data.
