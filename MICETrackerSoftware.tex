@@ -1,0 +1,45 @@
+\documentclass{99-Styles/MICE}
+\usepackage{bm} % For formatting math mode in bold
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+%
+\input 99-Styles/GetPackages
+
+\linenumbers
+\modulolinenumbers[5]
+\begin{document}
+
+\input 00a-Top-matter/00a-Top-matter
+
+%\makeatletter
+
+\input 99-Styles/MICE-defs
+
+\parindent 10pt
+\pagestyle{plain}
+\pagenumbering{arabic}                   
+\setcounter{page}{1}
+
+\input 00b-Abstract/00b-Abstract
+\input{01-MICE/01-MICE.tex}
+\input{02-CoordinateSystems/02-CoordinateSystems.tex}
+\input{03-MAUS/03-MAUS.tex}
+\input{04-DataStructure/04-DataStructure.tex}
+\input{05-Geometry/05-Geometry.tex}
+\input{06-Simulation/06-Simulation.tex}
+\input{07-Reconstruction/07-Reconstruction.tex}
+\input{08-Performance/08-Performance.tex}
+\input{09-Conclusion/09-Conclusion.tex}
+
+\clearpage
+
+\bibliography{MICE_2014-05}                                                                           
+\bibliographystyle{99-Styles/utphys}
+
+
+% \cleardoublepage
+% \appendix
+% \input 11-AuthorList/11-AuthorList
+
+\end{document}
