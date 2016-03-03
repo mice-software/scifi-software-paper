@@ -1,0 +1,252 @@
+\section{Appendix 1: Least Squares Fitting}
+\label{sec:LSQ}
+Least squares fitting is a very well known technique for fitting data to a curve by minimising the square of the the difference between the data points and the curve (known as the residuals).  The account given here will be relatively brief, for a more complete discussion see for example~\cite{Frodensen}. The discussion will also describe \textit{linear} least squares fitting only, as this is used in the tracker software framework without any recourse to iterative non-linear least squares methods. Linear here implies that the functions used to describe the data are linear in the parameters, even if not in the dependent variables. Linear least squares fitting, as well as being simpler to implement, has the the advantage of producing estimators which are both unbiased and of minimum variance. 
+
+Consider first a theoretical model for the curve in question in question.  The goal of a least squares fit would be to find the best estimate of the parameters of such a model. For example, if the model was that of a straight line, the fit would estimate the gradient and intercept of the line. 
+
+Consider the case where this model which contains only two variables. Let the first variable be known as $x$, and let measurements of this variable be denoted $x_1, x_2, ...\; x_N$, where $N$ is the number of times the variable is measured along the curve. The second variable may then be considered to correspond to known ``measurement sites'' where the measurements of the first variable are made (for example, the location of a detector plane). In this case, the second variable can be considered an independent variable of the model and shall be referred to as $z$. The location of the measurment sites shall then be referred to as $z_1, z_2, ...\; z_N$, and be taken to possess a negligible error.  This will be the case for the straight line fit.  
+
+Alternatively, the second variable of the model could correspond to a second measured variable with a non-trivial error associated with it.  In this case, let the variable be known as $y$, with measured values of $y_1, y_2, ...\; y_N$. In this case neither variable can be thought of as independent. This is case for the circle fit.
+
+The model should provide a set of functions, labelled $f_1, f_2, ...\; f_N$, which relates the two (or more) sets of variables present in the model.  These functions are parameterised, the parameters being labelled $\theta_1, \theta_2, ...\; \theta_M$. $M$ must be less than or equal to $N$ in order for the method to be able to determine the parameters. Taking the case where the second variable corresponds to known measurement sites, the functions may be written:
+
+\begin{equation}
+  f_i = f_i\left(z_i; \theta_1, \theta_2, ...\; \theta_M \right)
+\end{equation}
+In most cases $f_i$ have the same functional form $f$, such that:
+
+\begin{equation}
+  f_i = f\left(z_i; \theta_1, \theta_2, ...\; \theta_M \right)
+\end{equation}     
+The linearity of the functions in the parameters can be written as: 
+
+\begin{equation}
+  \label{eqn:FunctionLinearInParameters}
+  f_i  = \sum\limits_{j=1}^M a_{ij}(z_i) \theta_j 
+\end{equation}
+where the $a_{ij}$ coefficient is a function of the corresponding $z_i$. 
+
+The least squares estimate of the parameters is then determined by minimising the quantity:
+
+\begin{equation}
+  \label{eqn:LeastSquaresBasic}
+  S = \sum\limits_{i=1}^N w_i \left(x_i - f_i \right)^2 
+\end{equation}
+where $w_i$ is the weight associated with each measurement. Often the $w_i$ correspond to the precision of each measurment, given by the inverse of the variance of each measurement, $\left(\sigma_{xi}^2 \right)^{-1}$.
+
+With the basic principle established, it is then helpful to generalise eqn.~\ref{eqn:LeastSquaresBasic} using matrix notation. Let $\vec{z}$ denote the vector whose components are the independent variables $z_i$, $\vec{x}$ the vector of the corresponding measurements $x_i$, $\vec{f}$ the vector of the corresponding functions $f_i$, $\vec{\theta}$ the vector containing the paramters, and $A$ the matrix whose elements are the $a_{ij}$ coefficients.  
+
+\begin{equation}
+  \vec{x} = 
+    \begin{pmatrix}
+      x_1 \\
+      x_2 \\
+      \vdots \\
+      x_N
+    \end{pmatrix}
+  \mathrm{;} \quad
+  \vec{z} = 
+    \begin{pmatrix}
+      z_1 \\
+      z_2 \\
+      \vdots \\
+      z_N
+    \end{pmatrix}
+\end{equation}
+
+\vspace{3mm}
+\begin{equation}
+  \vec{\theta} = 
+    \begin{pmatrix}
+      \theta_1 \\
+      \theta_2 \\
+      \vdots \\
+      \theta_M
+    \end{pmatrix}
+  \mathrm{;} \quad
+  \vec{f} = 
+    \begin{pmatrix}
+      f\left( z_1; \theta_1, \theta_2 \ldots \theta_M \right) \\
+      f\left( z_2; \theta_1, \theta_2 \ldots \theta_M \right) \\
+      \vdots \\
+      f\left( z_N; \theta_1, \theta_2 \ldots \theta_M \right) \\
+    \end{pmatrix}
+  \mathrm{;} \quad
+  A = 
+    \begin{pmatrix}
+      a_{11} & a_{12} & \ldots & a_{1M} \\
+      a_{21} & a_{22} & \ldots & a_{2M} \\
+      \vdots & \vdots &  & \vdots \\
+      a_{N1} & a_{N2} & \ldots & a_{NM}
+    \end{pmatrix}
+\end{equation}
+
+\vspace{3mm}
+\noindent
+Linearity of the parameters is then expressed as: 
+
+\begin{equation}
+  \label{eqn:LinearityOfParamtersMatrixForm}
+  \vec{f} = A \vec{\theta}
+\end{equation}
+Additionally, let $V$ denote the covariance matrix, whose diagonal elements represent the statistical variance of each measurement, and whose off-diagonal elements describe the covariance of the different measurements. If the measurements are independent, as in the case of the tracker software, then all the off-diagonal terms become zero and the matrix is diagonal:
+
+\begin{equation}
+  V = V \left(\vec{x} \right) =
+  \begin{pmatrix}
+    \sigma_{x1} ^2 & 0 & \cdots & 0 \\
+    0 & \sigma_{x2} ^2 & \cdots & 0 \\
+    \vdots & \vdots  & \ddots & \vdots  \\
+    0  & 0 & \cdots & \sigma_{xN} ^2
+  \end{pmatrix}
+\end{equation}
+where $\sigma_{xi}$ denotes the standard deviation of the variable $x_i$.
+
+Eqn.~\ref{eqn:LeastSquaresBasic} may now be written as:
+
+\begin{equation}
+  S = \left(\vec{x} - \vec{f} \right)^T V^{-1} \left(\vec{x} - \vec{f} \right)
+\end{equation}
+
+\begin{equation}
+  \label{eqn:LeastSquaresMatrix}
+  \Rightarrow S = \left(\vec{x} - A\vec{\theta} \right)^T V^{-1} \left(\vec{x} - A\vec{\theta} \right)
+\end{equation}
+As well a being more general, this form of the equation is extremely useful for translating into code. In order to minimise $S$ with respect to the parameters, the derivatives of $S$ with respect to the parameters must be set to zero:
+
+\begin{equation}
+  \frac{\partial S}{\partial \vec{\theta}} = -2\left(A^T V^{-1} \vec{x} - A^T V^{-1} A\vec{\theta} \right) = \vec{0}
+\end{equation}
+Rearranging:
+
+\begin{equation}
+  A^T V^{-1} A\vec{\theta} = A^T V^{-1} \vec{x}
+\end{equation}
+Provided the matrix $A^T V^{-1} A$ may be inverted this equation can solved for the parameters:
+
+\begin{equation}
+  \label{eqn:LeastSquaresSolution}
+  \vec{\theta} = \left(A^T V^{-1} A \right)^{-1} A^T V^{-1} \vec{x}
+\end{equation}
+Lastly it can be shown (again, see~\cite{Frodensen}) that the covariance matrix associated with the above least squares estimate of the parameters is given by:
+
+\begin{equation}
+  \label{eqn:LeastSquaresSolutionError}
+  V(\vec{\theta}) = \left(A^T V^{-1} A \right)^{-1}
+\end{equation}
+which would already have been computed to find the solution to eqn.~\ref{eqn:LeastSquaresSolution}.
+
+Having described the theory, the application to the tracker reconstruction will now be described.  Here only two cases are required: a straight line fit used for fitting straight tracks and for fitting helical tracks in the $(z, s)$ plane, and a circle fit used to fit helical tracks in the $(x, y)$ plane.
+
+\subsection{Straight Line Fit} For straight tracks two straight line fits are performed, one in $(z, x)$ and one in $(z, y)$. The procedure is identical in both cases, and shall be described here for the $(z, x)$ case.  The independent variables, $z_i$ correspond to the longitudinal positions ($z$) of each spacepoint in the trial track. The measurements $x_i$ correspond to the $x$ position of each spacepoint in the trial track. $N$, the number of measurments, corresponds to the number of spacepoints in the trial track (a minimum of 3, a maximum of 5). The $f_i$ all have the same functional form, and shall be referred to as just $f\left(z_i \right)$. The form is simply the equation of a straight line in the $(z, x)$ plane, given by eqn.~\ref{eqn:StraightLineX}.  Hence there are two parameters, the intercept $x_0$ and the gradient $t_x$. Thus:
+
+\begin{equation}
+  f = \theta_1 + \theta_2 z = x_0 + t_x z \\
+\end{equation}
+
+\begin{equation}
+  \vec{\theta} =
+  \begin{pmatrix}
+    x_0 \\
+    t_x
+  \end{pmatrix}
+\end{equation}
+The vector of functions is then given by:
+
+\begin{equation}
+  \vec{f} = 
+  \begin{pmatrix}
+    x_0 + t_x z_1 \\
+    x_0 + t_x z_2 \\
+    \vdots \\
+    x_0 + t_x z_N
+  \end{pmatrix}
+\end{equation}
+It then follows that the matrix of coefficients, $A$, is:
+
+\begin{equation}
+  A =
+  \begin{pmatrix}
+    1 & \quad z_1 \\
+    1 & \quad z_2 \\
+    \vdots & \quad \vdots \\
+    1 & \quad z_N
+  \end{pmatrix}
+\end{equation}
+
+\noindent
+The last matrix needed, the covariance matrix, is given by:
+
+\begin{equation}
+  V =
+  \begin{pmatrix}
+    \sigma_{x1} & 0 & 0 & 0 \\
+    0 & \sigma_{x2} & 0 & 0 \\
+    \vdots & & \ddots & \\
+    0 & 0 & 0 & \sigma_{xN}
+  \end{pmatrix}
+\end{equation}
+
+\noindent
+The matrix is diagonal as all the measurements are taken to be independent. The $\sigma_{xi}$ are simply the spatial resolution of the tracker station which recorded the spacepoint. This is 384.4~$\mu$m for every station, with the exception of station 5 in the upstream tracker, for which it is 429.8~$\mu$m (arising from a difference in the construction process for this station). 
+
+All the needed matrices have now been defined for the straight fit case, and the least squares estimate of the parameters can be determined using eqn.~\ref{eqn:LeastSquaresSolution}, with the correspond errors given by eqn.~\ref{eqn:LeastSquaresSolutionError}. These algorithms are straightforward to implement in code, with the matrices and necessary inversions being performed using the CLHEP C++ library\footnote{See http://cern.ch/clhep}.
+
+\subsection{Circle Fit}
+The circle fit case is slightly more complicated. Starting from eqn.~\ref{eqn:CircleAlphaSystem} the relevant parameters to be solved for are $\alpha$, $\beta$ and $\gamma$ (this offers number of advantages over using the standard equation for a circle given eqn.~\ref{eqn:CircleStandardSystem}).  Three parameters require a minimum of three measurements sites, while the minimum number of spacepoints admissable in a helical track is four, meaning that the system is again over constrained and soluble. 
+
+It can be seen however that there is now no variable corresponding to a measurement site, but rather two points along the curve are measured, $x$ and $y$.  This leads to slightly different formulation of $S$, the quantity to be minimised, than that shown in eqn.~\ref{eqn:LeastSquaresMatrix}. Looking at eqn.~\ref{eqn:CircleAlphaSystem}, it can be seen that the correct values of the parameters should set the left hand side of the equation to zero. Hence, by minimising the left hand side in terms of the parameters, it is again possible to obtain a least squares estimate of the parameters.  Let f be defined as:
+
+\begin{equation}
+  \label{eqn:fCircle}
+  f = \alpha(x^2+y^2) + \beta x + \gamma y
+\end{equation}
+As $\kappa$ is simply equal to $-1$, we exclude this from $f$ and will use it later to formulate $S$ in analogous way to eqn.~\ref{eqn:LeastSquaresMatrix}. Eqn.~\ref{eqn:fCircle} then gives:
+
+\begin{equation}
+  \vec{\theta} =
+  \begin{pmatrix}
+    \alpha \\
+    \beta \\
+    \gamma
+  \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+  \vec{f} = 
+  \begin{pmatrix}
+    \alpha(x_1 ^2+y_1 ^2) + \beta x_1 + \gamma y_1 \\
+    \alpha(x_2 ^2+y_2 ^2) + \beta x_2 + \gamma y_2 \\
+    \vdots \\
+    \alpha(x_N ^2+y_N ^2) + \beta x_N + \gamma y_N \\
+  \end{pmatrix}
+\end{equation}
+Together with eqn.~\ref{eqn:LinearityOfParamtersMatrixForm} this gives the form of $A$:
+
+\begin{equation}
+  A = 
+    \begin{pmatrix}
+      x_1 ^2 + y_1 ^2 & x_1 & y_1 \\
+      x_2 ^2 + y_2 ^2 & x_2 & y_2 \\
+      \vdots & \vdots &  & \vdots \\
+      x_N ^2 + y_N ^2 & x_N & y_N \\
+    \end{pmatrix}
+\end{equation}
+
+Finally, $S$ may now be defined as:
+
+\begin{equation}
+  S = \left(\vec{1} - \vec{f} \right)^T V^{-1} \left(\vec{1} - \vec{f} \right)
+\end{equation}
+
+\begin{equation}
+  \label{eqn:LeastSquaresCircleMatrix}
+  \Rightarrow S = \left(\vec{1} - A\vec{\theta} \right)^T V^{-1} \left(\vec{1} - A\vec{\theta} \right)
+\end{equation}
+$S$ may then minimised to determine the least squares estimate of $\vec{\theta}$, following the same steps given earlier.  This leads to:
+\begin{eqnarray}
+  \vec{\theta} & = & \left( A^T V^{-1} A \right)^{-1} A^T V^{-1} \vec{1} \\
+  V\left(\theta \right) & = & \left( A^T V^{-1} A \right)^{-1}
+\end{eqnarray}
+This then provides the least squares estimate for the circle parameters, the matrices begin implemented in code as in the straight line case.
+  

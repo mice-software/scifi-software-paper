@@ -1,0 +1,22 @@
+\section{Coordinate systems and Reference Surfaces}
+\label{sec:Coordinates}
+
+  \subsection{Channels and Digits}
+  The $V$ and $W$ planes each consist of 214 channels, labelled 0 to 213, while the $U$ plane has 212 channels, labelled 0 to 211.  The channel number increases from left to right if a plane is placed mylar side up, with the fibre readout pointing downwards, as illustrated in figure~\ref{fig:DoubletLayerOrder}.
+
+  \subsection{Planes and Clusters}
+  The plane reference surface is defined to be the flat plane that is formed by the outer surface of the mylar sheet. The measured position perpendicular to the direction of the fibres in each plane is labelled  $\alpha \in (v, u, w)$, defined to increase in the same direction as the channel number.  The $z$ axis of the plane coordinate system is defined to be perpendicular to the plane reference surface and points in the direction from the mylar sheet towards the fibres. The direction in which the fibres run defines the final plane coordinate, $\beta$, with the direction defined to complete a right-handed coordinate system. The origin of the $(\beta, \alpha)$ coordinate system is taken to be at the centre of the circular active area of the plane.
+
+  \subsection{Stations and Spacepoints}
+  The station reference surface is defined to coincide with the reference surface of the $V$ doublet-layer. The station coordinate system is defined such that the $y_s$ axis is coincident with the $v$ axis, the $z_s$ axis is coincident with the $z_p$ axis of the $V$ layer and the $x_s$ axis completes a right-handed coordinate system.
+ 
+
+  \subsection{Trackers and Tracks}
+  The tracker reference surface is defined to coincide with the reference surface of Station~1. The tracker coordinate system is defined such that the $z_t$ axis coincides with the axis of cylindrical symmetry of the tracker as shown in figure~\ref{fig:Trackers}. The tracker $z_t$ coordinate increases from Station~1 to Station~5. The tracker $y_t$ axis is defined to coincide with the $y_s$ axis of Station~1 and the tracker $x_t$ axis completes a right-handed coordinate system. 
+  
+  \begin{figure}[htb]
+    \begin{center}
+      \includegraphics[width=0.9\textwidth]{02-CoordinateSystems/PlaneCoordinatesAndNumbering.pdf}
+      \caption{\label{fig:DoubletLayerOrder} (a)~The channel numbering within a plane, and the $(\beta, \alpha, z_p)$ plane coordinate system (a right-handed system).  (b)~The fibre plane ordering with respect to the station body and the station coordinate frame (a right-handed system).  In Tracker~1 the beam approaches from the right, in Tracker~2 from the left. Note that $z_s$ is by definition equivalent to $z_p$ of the $V$ plane.}
+    \end{center}
+  \end{figure}
