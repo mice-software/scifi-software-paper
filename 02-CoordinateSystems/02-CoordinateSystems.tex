@@ -5,7 +5,16 @@
   The $V$ and $W$ planes each consist of 214 channels, labelled 0 to 213, while the $U$ plane has 212 channels, labelled 0 to 211.  The channel number increases from left to right if a plane is placed mylar side up, with the fibre readout pointing downwards, as illustrated in figure~\ref{fig:DoubletLayerOrder}.
 
   \subsection{Planes and Clusters}
-  The plane reference surface is defined to be the flat plane that is formed by the outer surface of the mylar sheet. The measured position perpendicular to the direction of the fibres in each plane is labelled  $\alpha \in (v, u, w)$, defined to increase in the same direction as the channel number.  The $z$ axis of the plane coordinate system is defined to be perpendicular to the plane reference surface and points in the direction from the mylar sheet towards the fibres. The direction in which the fibres run defines the final plane coordinate, $\beta$, with the direction defined to complete a right-handed coordinate system. The origin of the $(\beta, \alpha)$ coordinate system is taken to be at the centre of the circular active area of the plane.
+  The plane reference surface is defined to be the flat plane that is formed by the outer surface of the mylar sheet. The measured position perpendicular to the direction of the fibres in each plane is labelled  $\alpha \in (v, u, w)$, defined to increase in the \textit{opposite} direction to the channel number. $\alpha$ is then given by:
+  
+  \begin{equation}
+   \alpha = \left(N_{CF} - N_{Ch}\right) \times p \times d
+  \end{equation}
+
+  \noindent
+  where $N_{CF}$ is the central fibre number, $N_{Ch}$ is the channel number, $p$ is the channel pitch, that is twice the horizontal distance between neighbouring fibres ($2 \times 213.5 = 417$~mm) , and $d$ is half the number of fibres in a channel, i.e. $3.5$ (see figure~\ref{fig:DoubletLayer}, it can be seen $p \times d$ is just the width of a channel).  
+  
+  The $z$ axis of the plane coordinate system is defined to be perpendicular to the plane reference surface and points in the direction from the mylar sheet towards the fibres. The direction in which the fibres run defines the final plane coordinate, $\beta$, with the direction defined to complete a right-handed coordinate system. The origin of the $(\alpha, \beta)$ coordinate system is taken to be at the centre of the circular active area of the plane.
 
   \subsection{Stations and Spacepoints}
   The station reference surface is defined to coincide with the reference surface of the $V$ doublet-layer. The station coordinate system is defined such that the $y_s$ axis is coincident with the $v$ axis, the $z_s$ axis is coincident with the $z_p$ axis of the $V$ layer and the $x_s$ axis completes a right-handed coordinate system.
@@ -16,6 +25,7 @@
   \begin{figure}[htb]
     \begin{center}
       \includegraphics[width=0.9\textwidth]{02-CoordinateSystems/PlaneCoordinatesAndNumbering.pdf}
-      \caption{\label{fig:DoubletLayerOrder} (a)~The channel numbering within a plane, and the $(\beta, \alpha, z_p)$ plane coordinate system (a right-handed system).  (b)~The fibre plane ordering with respect to the station body and the station coordinate frame (a right-handed system).  In TKU the beam approaches from the right, in TKD from the left. Note that $z_s$ is by definition equivalent to $z_p$ of the $V$ plane.}
+      \caption{\label{fig:DoubletLayerOrder} (a)~The channel numbering within a plane, and the $(\alpha, \beta, z_p)$ plane coordinate system (a right-handed system).  (b)~The fibre plane ordering with respect to the station body and the station coordinate frame (a right-handed system).  In TKU the beam approaches from the right, in TKD from the left. Note that $z_s$ is by definition equivalent to $z_p$ of the $V$ plane.}
     \end{center}
   \end{figure}
+
