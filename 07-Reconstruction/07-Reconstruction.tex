@@ -11,18 +11,30 @@ The reconstruction process is illustrated in figure~\ref{fig:DataFlow} for both 
 
   \subsection{Digitization}
   \label{subsec:Digitization}
-  For real data the electronic signals produced by the VLPCs are digitised using analogue-to-digital converters (ADCs). The DAQ system records the pulse height for each DAQ channel.  Channel-by-channel cailbration constants are used to convert the ADC value to a signal in units of photo-electrons (PE) and the VLPC channel number to fibre number.  This information is then used to form a Digit.  The analagous process for Monte Carlo data is described in section~\ref{sec:Simulation}.
+  For real data the electronic signals produced by the VLPCs are digitised using analogue-to-digital converters (ADCs). The DAQ system records the pulse height for each DAQ channel.  Channel-by-channel cailbration constants are used to convert the ADC value to a signal in units of photo-electrons (PE) and the VLPC channel number to tracker channel number.  This information is then used to form a Digit.  The analagous process for Monte Carlo data is described in section~\ref{sec:Simulation}.
 
   \subsection{Clustering}
   \label{subsec:Clustering}
   A particle that traverses a plane will generate a hit in one or at most two adjacent channels.  An isolated hit or hits in two adjacent channels form a cluster.  
   
-  The clustering algorithm loops over every combination of pairs of Digits in a SciFiEvent and combines any that occur in neighbouring channels in the same plane. The channel offset is then calculated by subtracting the central fibre channel number from the digit channel number. In the case of multi-digit cluster, the average channel value is used. From the channel offset the position in the  $(u,v,w)$ co-ordinate system can be detemined
+  The clustering algorithm loops over every combination of pairs of Digits in a SciFiEvent and combines any that occur in neighbouring channels in the same plane. In the case of multi-digit cluster, the average channel value is used. The cluster positioning is defined by the coordinates $(\alpha, \beta)$ where $\alpha$ and the direction of $\beta$ have been defined in Section ~\ref{subsec:PlaneAndClusters}. The value for $\beta$ is determined by solving in the case of two overlapping active channels:
+  
+  \begin{equation}
+    \begin{pmatrix}
+     \alpha_1 \\ \beta_1
+    \end{pmatrix} = R_{1}^{-1} R_2
+    \begin{pmatrix}
+      \alpha_2 \\ \beta_2
+    \end{pmatrix}
+  \end{equation}
+  
+  \noindent
+  where $R_1$, $R_2$ are the rotation matrices that correspond to the orientation of the specified plane. 
 
   \subsection{Spacepoint Reconstruction}
   \label{subsec:SpacepointReconstruction}
   For each station the constituent planes are searched for clusters which can be used to define a Spacepoint. Spacepoints are defined by Clusters from all three planes (a triplet Spacepoint) or for any two out of the three planes (a doublet Spacepoint). 
-  From the Cluster co-ordinates the $(x, y)$ coordinates of the Spacepoint are calculated.
+  From the Cluster co-ordinates, $(\alpha, \beta)$, the $(x, y)$ coordinates of the Spacepoint are determined by rotating into tracker frame.
 
   \subsubsection{Cluster selection}
   \label{subsubsec:ClusterSelection}
