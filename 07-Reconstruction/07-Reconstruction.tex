@@ -60,18 +60,66 @@ The reconstruction process is illustrated in figure~\ref{fig:DataFlow} for both 
 
    \subsection{Track Fit}
    \label{subsec:FinalTrackFit}
-   The final track fit was implemented using a track-orientated Kalman filter\cite{Fruhwirth,Billoir}, which can be shown to be an optimal linear fitter that takes into account all correlations and measurements, under the assumption that the system and measurements have a linear response. For the helical track fit, the system is only approximately linear, hence an extended Kalman filter was implmented. This implementation analytically propagates the track states between measurements, while the associated covariance matrix is propagated using a linear approximation to the non-linear system.
-
-   Pattern recognition provides a set of clusters that are associated with a track which passed the selection criteria, and a parameterisation of that track based on a least squares fit to the points by a helix or a straight line as appropriate. The track parameters calculated from the least squares fit are used to provide the seed for the Kalman fit and the raw cluster information is used as the measurement data. The flexibility of the Kalman algorithm permits the effects of individual planes (MCS and energy loss) to be accounted for between each measurement point.
+   The final track fit was implemented using a track-orientated Kalman filter\cite{Fruhwirth,Billoir}, which can be shown to be an optimal linear fitter, that takes into account all correlations and measurements, for a linear system. The Kalman Filter is an iterative algorithm that incrementally propagates an estimate of the current track state between measurement planes, using measurement information to ``filter'' the state, improving the estimate of the track state.
    
-   The track is modelled as function of $z$ (the direction of the beam) where each plane represents a trackpoint and contains a measurement and a track state. The ``process noise'', the statistical fluctuation in the track state between two planes, is modelled using approximations to multiple coulomb scattering and energy straggling. The ``measurement noise'', the statistical error associated with making a measurement of the track, corresponds the statistically error associated with making a measurement of the true track state. This was computed to be $w/\sqrt{12}$, which corresponds to the standard deviation of a top-hat function representing an individual channel width. Both the process noise and measurement noise are gaussian approximations to non-gaussian functions. Higher order approximations could be made in future to account for the non-linearity more rigorously.
-   
-   Starting from station~5, plane~2, in each tracker, the Kalman fit progresses towards station~1, plane~0, first predicting the state at the next plane before using the measurement information to improve on the prediction. This process is known as filtering and continues until all the planes have been included in the fit. Should a plane not contain a measurement, the predicted value is stored instead of the filtered value. Once the filtering stage is complete, the track is ``smoothed'' to ensure that the benefits of using all the measurement information is correctly distributed throughout the track. Smoothing involves propagting the track in reverse from station~1 to station~5 weighting the change in state by the effect of the subsequent measurements.
+   For the helical track fit, the system is only approximately linear, hence an extended Kalman filter was implemented which analytically propagates the track states between measurements, while the covariance matrices are propagated using a first-order linear approximation to the non-linear system.
 
-    \subsubsection{Goodness of fit}
-    For each fitted track, a test statistic is computed, which is the $\chi^2$ sum over all the trackpoints. It is calculated by $\chi^2\sum_{k=0}^{k=n}\chi_k^2$ where each chisquared update is given by $\chi_{k}^{2}=\mathbf{r}_{k}^{T}\mathrm{R}_{k}^{-1}\mathbf{r}_{k}$: where $r_{k}$ is the residual computed from the filtered state vector. $r_{k}=\mathbf{m}_{k}-\mathrm{H}_{k}\mathbf{a}_{k}$: where $\mathbf{m}_{k}$ is the $k^{th}$  measured point; $\mathbf{a}_{k}$ is the best Kalman estimate of track state vector at the $k^{th}$ intersection point and $\mathrm{H}_{k}$ is the matrix which projects the state vector of the track into the measurement space. $\mathrm{R}_{k}$ is the covariance matrix of the residuals and is given by  $\mathrm{R}_{k}=\mathrm{V}_{k}-\mathrm{H}_{k}\mathrm{C}_{k}\mathrm{H}_{k}^{T}$ where $\mathrm{V}_{k}$ is the measurement covariance matrix and $\mathrm{C}_{k}$ is the projected variance matrix. This definition of  $\chi^{2}$  takes into account correlations in the measurement predictions and, combined with the number of degrees of freedom of the track fit, is used to generate a {\it p-value} for the track, which we use as a measure of fit quality.
+   Pattern recognition provides a set of clusters that are associated with a track, which passed the selection criteria, and a parameterisation of that track based on a least squares fit to the points by a helix or a straight line as appropriate. The track parameters calculated from the least squares fit are used to provide the seed for the Kalman fit and the raw cluster information is used as the measurement data. The flexibility of the Kalman algorithm permits the effects of individual planes (MCS and energy loss), in addition to the material effects of the Helium gas within the tracker, to be accounted for between each measurement point.
 
-    \subsubsection{Important Considerations}
+     \subsubsection{Kalman Filtering}
+
+     The track is modelled as a discrete state space function of $z$ (the direction of the beam), indicated by the subscript, $k$, where each tracker plane corresponds to a trackpoint and contains a measurement and a track state. Equation~\ref{equ:kalman_system_equation} describes how the true state space vector, $\mathbf{x}_{k,t}$, is assumed to propagate to a subsequent measurement plane. The matrix, $\mathbf{F}_k$, is the Kalman Propagator and describes the first order description of the propagtion between measurement planes. $\mathbf{w}_k$ represents some ``process noise'', which may affect the system between the two measurement planes and is assumed to be gaussian distributed white noise.
+    \begin{equation}
+      \mathbf{x}_{k,t} = \mathbf{F}_{k-1}\mathbf{x}_{k-1,t} + \mathbf{w}_{k-1}
+      \label{equ:kalman_system_equation}
+    \end{equation}
+    \begin{equation*}
+      \textrm{exp}(\mathbf{w}) = 0 \quad\quad \textrm{and} \quad\quad \textrm{cov}(\mathbf{w}) = \mathbf{Q}
+    \end{equation*}
+     
+     The tracker measurements are interpreted in a different state space to the track, allowing measurements of any dimension to be used to filter the track. Equation~\ref{equ:kalman_measurement_equation} describes how the true track state is ``measured'' to be transformed into the measurement space. The matrix, $\mathbf{H}_k$, is the Kalman Measurement Matrix and describes, to first order, the transformation from track state space to the measurement state space. $\mathbf{\varepsilon}_k$ represents some ``measurement noise'' which may smear the measurement of the true state space, it is also assumed to be gaussian distributed.
+    \begin{equation}
+      \mathbf{m}_k = \mathbf{H}_kx_{k,t} + \mathbf{\varepsilon}_k
+      \label{equ:kalman_measurement_equation}
+    \end{equation}
+    \begin{equation*}
+      \textrm{exp}(\mathbf{\varepsilon}) = 0 \quad\quad \textrm{and} \quad\quad \textrm{cov}(\mathbf{\varepsilon}) = \mathbf{V}
+    \end{equation*}
+
+    For each measurement plane that contains a measurement, the current estimate for the track state vector is ``filtered'' using the measurement information. This is acheived using the residual between the estimate for the track state and the measurement data, in the measurement state space. Equation~\ref{equ:kalman_state_filtered} describes how the predicted state vector, $\mathbf{x}_{k}^{k-1}$ is filtered using the Kalman Gain Matrix, $\mathbf{K}_k$, to produce the filtered track estimate, $\mathbf{x}_k$. Equation~\ref{equ:kalman_gain_matrix} defines the Kalman Gain Matrix.
+    \begin{equation}
+      \mathbf{x}_k = \mathbf{x}_k^{k-1} + \mathbf{K}_k ( \mathbf{m}_k - \mathbf{H}_k \mathbf{x}_k^{k-1} )
+      \label{equ:kalman_state_filtered}
+    \end{equation}
+    The predicted covariance matrix, $\mathbf{C}_k^{k-1}$, is filtered in a similar  fashion to produce the filtered covariance matrix, $\mathbf{C}_k^{k}$, as described in equation~\ref{equ:kalman_covariance_filtered}:
+    \begin{equation}
+      \mathbf{C}_k = ( \mathbf{I} - \mathbf{K}_k \mathbf{H}_k ) \mathbf{C}_k^{k-1}
+      \label{equ:kalman_covariance_filtered}
+    \end{equation}
+    The Kalman Gain matrix is calculated by:
+    \begin{equation}
+      \mathbf{K}_k = \mathbf{C}_k^{k-1} \mathbf{H}_k^\mathsf{T} (\mathbf{V}_k + \mathbf{H}_k \mathbf{C}_k^{k-1} \mathbf{H}_k^\mathsf{T})^{-1}
+      \label{equ:kalman_gain_matrix}
+    \end{equation}
+
+    The sequence of prediction and filtering is repeated for all the measurement planes, starting from station~5, plane~2, where the predicted state vector and covariance matrix is determined from the pattern recognition fit parameters, to station~1, plane~0, the reference plane. Once the reference plane has been reached, the state vector will have been sequentially filtered using all the measurements in turn to create the optimal estimate of the track state at that plane. The fit can then be smoothed, whereby the optimal state vector is propagated in reverse down the length of the track, such that all the subsequent measurements can be used to re-adjust previous state vector estimates. This is dsecribed in~\cite{Fruhwirth}
+
+
+    \subsubsection{The MAUS Kalman Filter}
+    In order to implement a flexible re-usable Kalman Filter, the core algorithm was implemented without any dependencies on phasespace dimensions or physical effects. Due to this only the system specific functionality need provided for a complete implmentation. In MAUS, the propagation routines for both helical and straight tracks were implemented, a measurement routine that correctly transforms the track state space into the measurement state space was implemented, and the approximations for the process and measurement noise were implemented.
+    
+    The measurements correspond to individual clusters, hence the parameter $\alpha$ is the forms a one-dimensional measurement state. The measurement noise corresponds to the statistical spread of measurements within a single channel in the tracker readout. If the channel is modelled as a top-hat function, the variance of the function is calculated as $w^2/12$, where $w$ corresponds to the width of the channel. Therefore the measurement noise was assumed to be $w/\sqrt{12}$ for all clusters.
+
+    The process noise was implmented as a combination of multiple coulomb scattering (MCS) and energy straggling. The mean energy loss was is calculated using the Bethe-Bloch equation and applied during the propagation stage. The noise term itself is calculated per increment, as an RMS scattering angle using an implementation of the Highland formula (equation~\ref{equ:highland_formula}), in a fashion almost identicle to the Geant4 implementation. Although the RMS scattering angle does not form a gaussian distribution, the first order approximation was believed to be sufficient.
+    \begin{equation}
+      \theta_{RMS} = \frac{13.6\textrm{MeV/c}}{\beta c p} z \frac{x}{X_0}\left( 1 + 0.038 \ln(\frac{x}{X_0} \right)
+      \label{equ:highland_formula}
+    \end{equation}
+    where $\theta_{RMS}$ is the RMS scattering angle through a finite length of material, $\beta c$, $p$ and $z$ are the velocity, momentum and charge of the particle in question, and $x/X_0$ represents the total path length through the material per radiation length.
+
+%    \subsubsection{Goodness of fit}
+%    For each fitted track, a test statistic is computed, which is the $\chi^2$ sum over all the trackpoints. It is calculated by $\chi^2\sum_{k=0}^{k=n}\chi_k^2$ where each chisquared update is given by $\chi_{k}^{2}=\mathbf{r}_{k}^{T}\mathrm{R}_{k}^{-1}\mathbf{r}_{k}$: where $r_{k}$ is the residual computed from the filtered state vector. $r_{k}=\mathbf{m}_{k}-\mathrm{H}_{k}\mathbf{a}_{k}$: where $\mathbf{m}_{k}$ is the $k^{th}$  measured point; $\mathbf{a}_{k}$ is the best Kalman estimate of track state vector at the $k^{th}$ intersection point and $\mathrm{H}_{k}$ is the matrix which projects the state vector of the track into the measurement space. $\mathrm{R}_{k}$ is the covariance matrix of the residuals and is given by  $\mathrm{R}_{k}=\mathrm{V}_{k}-\mathrm{H}_{k}\mathrm{C}_{k}\mathrm{H}_{k}^{T}$ where $\mathrm{V}_{k}$ is the measurement covariance matrix and $\mathrm{C}_{k}$ is the projected variance matrix. This definition of  $\chi^{2}$  takes into account correlations in the measurement predictions and, combined with the number of degrees of freedom of the track fit, is used to generate a {\it p-value} for the track, which we use as a measure of fit quality.
+
 
 %\begin{equation}
 %\chi_{k}^{2}=\mathbf{r}_{k}^{T}\mathrm{R}_{k}^{-1}\mathbf{r}_{k}.
