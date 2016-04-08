@@ -123,7 +123,7 @@ The reconstruction process is illustrated in figure~\ref{fig:DataFlow} for both 
     
     The measurements correspond to individual Clusters, hence the parameter $\alpha$ (see section~\ref{subsec:PlaneAndClusters}) forms a one-dimensional measurement state. The measurement noise corresponds to the statistical spread of measurements within a single channel in the tracker readout. If the channel is modelled as a top-hat function, the variance of the function is calculated as $w^2/12$, where $w$ corresponds to the width of the channel. Therefore the measurement noise was assumed to be $w/\sqrt{12}$ for all Clusters.
 
-    The process noise was implmented as a combination of MCS and energy straggling. The mean energy loss was is calculated using the Bethe-Bloch equation and applied during the propagation stage. The noise term itself is calculated per increment, as an RMS scattering angle using an implementation of the Highland formula (equation~\ref{equ:highland_formula}), in a fashion almost identicle to the GEANT4 implementation:
+    The process noise was implmented as a combination of MCS and energy straggling. The energy loss  was is calculated using the Landau-Vavilov formula, for the most probable energy loss, and applied during the propagation stage. The noise term itself is calculated per increment, as an RMS scattering angle using an implementation of the Highland formula (equation~\ref{equ:highland_formula}), in a fashion almost identicle to the GEANT4 implementation:
     \begin{equation}
       \theta_{RMS} = \frac{13.6\textrm{MeV/c}}{\beta c p} z \frac{x}{X_0}\left( 1 + 0.038 \ln(\frac{x}{X_0} \right)
       \label{equ:highland_formula}
