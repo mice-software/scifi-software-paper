@@ -5,12 +5,12 @@
 
   The fitted transverse positions, $(x,y)$, and momenta, $(p_x, p_y, p_z)$, were compared against the the Monte Carlo truth on an event-by-event basis. The reconstructed events were not subject to any cuts or additional requirements over those of real data reconstruction. The Monte Carlo truth data was determined from the simulated track information, which was stored at every tracker plane to permit a direct comparison to the reconstructed data. All data sets were compared at the tracker reference surface, the designated measurement location with the MICE cooling channel.
 
-  An artificial beam was generated with uniform distributions in both the longintudinal and transverse momenta. This was to ensure that the results were not biased by the incoming beam distribution, and that the full reconstructable phase space was probed with equal statistics.
+  An artificial beam was generated with uniform distributions in both the longitudinal and transverse momenta. This was to ensure that the results were not biased by the incoming beam distribution, and that the full reconstructible phase space was probed with equal statistics.
 
   \subsection{Track Finding Efficiency}
   \label{sec:performance:track_finding}
 
-  For every simulated event, the number of expected tracks was calculated from the Monte Carlo truth. If the simulated track crossed enough tracker planes to create a sufficient number of spacepoints (3 for straight tracks and 4 for helical tracks), a reconstructed track was expected. The reconstructed tracks were then compared for each tracker and compared to the expected track parameters. The efficiency of track finding as a function of the true longtudinal and transverse momenta is shown in figure~\ref{fig:track_efficiency}.
+  For every simulated event, the number of expected tracks was calculated from the Monte Carlo truth. If the simulated track crossed enough tracker planes to create a sufficient number of spacepoints (3 for straight tracks and 4 for helical tracks), a reconstructed track was expected. The reconstructed tracks were then compared for each tracker and compared to the expected track parameters. The efficiency of track finding as a function of the true longitudinal and transverse momenta is shown in figure~\ref{fig:track_efficiency}.
 
   \begin{figure}[p]
     \centering
@@ -29,7 +29,7 @@
     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pz_tp_efficiency.pdf}\\
     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/upstream_pt_tp_efficiency.pdf}
     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pt_tp_efficiency.pdf}
-    \caption{\label{fig:tp_efficiency} The efficiency of reconstructing trackpoionts in the upstream (left) and downstream (right) trackers as a function of the simulated transverse momentum.}
+    \caption{\label{fig:tp_efficiency} The efficiency of reconstructing trackpoints in the upstream (left) and downstream (right) trackers as a function of the simulated transverse momentum.}
   \end{figure}
 
 
@@ -38,11 +38,11 @@
   
   Position residuals are shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, and the momentum residuals in figures~\ref{fig:PtResidKalman} and \ref{fig:PzResidKalman}.  The position reconstruction can be seen to agree with the Monte Carlo truth to high precision in both the upstream and downstream trackers. The momentum residuals currently display some systematic effect which is due to a known issue with the energy loss determination and is currently under study.
   
-  In order to produce these plots, a requirement that there was a cluster within the reference plane was applied. Due to the effects of Multiple Coulomb Scattering, on rare occaisons a single hard scatter can cause pattern recognition to miss a single spacepoint at the reference plane, hence creating a tail that will adversely affect the distrubtions. As we are concerned with the resolution following a successful pattern recognition stage, these events were removed.
+  In order to produce these plots, a requirement that there was a cluster within the reference plane was applied. Due to the effects of Multiple Coulomb Scattering, on rare occasions a single hard scatter can cause pattern recognition to miss a single spacepoint at the reference plane, hence creating a tail that will adversely affect the distributions. As we are concerned with the resolution following a successful pattern recognition stage, these events were removed.
   
-  The position residuals are consistent with the expected measurement resolutions for a combined fit and the absolute spread is very close to the width of a channel (1.497mm). The transverse momentum resolution is consitent accross the range of the sensitive phase space at $\sim$1~MeV/c in both trackers. The longitudinal momentum, an intrinsically more difficult measurement for the tracker, still retains an acceptable spread of $\sim2.7$~MeV/c in both trackers. There is however a systematic offset present in the distributions, $\sim0.8$~MeV/c in both trackers, and the distributions have more pronounced tails than in the transverse cases. These offsets require further investigation. It is believed that the root cause is a systematic under (over) estimation of the energy loss per plane in the upstream (downstream) tracker, which is realised in the 0.8~MeV/c longitudinal, and 0.2~MeV/c transverse, systematic offsets.
+  The position residuals are consistent with the expected measurement resolutions for a combined fit and the absolute spread is very close to the width of a channel (1.497mm). The transverse momentum resolution is consistent across the range of the sensitive phase space at $\sim$1~MeV/c in both trackers. The longitudinal momentum, an intrinsically more difficult measurement for the tracker, still retains an acceptable spread of $\sim2.7$~MeV/c in both trackers. There is however a systematic offset present in the distributions, $\sim0.8$~MeV/c in both trackers, and the distributions have more pronounced tails than in the transverse cases. These offsets require further investigation. It is believed that the root cause is a systematic under (over) estimation of the energy loss per plane in the upstream (downstream) tracker, which is realised in the 0.8~MeV/c longitudinal, and 0.2~MeV/c transverse, systematic offsets.
   
-  Trends in transverse and longitudinal momentum resolution as a function of transverse momentum are shown in figures~\ref{fig:PtPtResolKalman} and \ref{fig:PtPzResolKalman}. A consistently uniform distribution is found in the transverse momentum as exected, with the predominant issue found in the longitudinal reconstruction of low-$P_t$ tracks. This effect, when coupled with variations in efficiency will yield some systematic concerns in the reconstruction of statistical quantities such as emittance. Studies of these systematic biases are currently underway.
+  Trends in transverse and longitudinal momentum resolution as a function of transverse momentum are shown in figures~\ref{fig:PtPtResolKalman} and \ref{fig:PtPzResolKalman}. A consistently uniform distribution is found in the transverse momentum as expected, with the predominant issue found in the longitudinal reconstruction of low-$P_t$ tracks. This effect, when coupled with variations in efficiency will yield some systematic concerns in the reconstruction of statistical quantities such as emittance. Studies of these systematic biases are currently under way.
 
   \begin{figure}[p]
     \begin{center}
@@ -81,7 +81,7 @@
    \begin{center}
      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pt_resolution_pt.pdf}
      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pt_resolution_pt.pdf}
-     \caption{\label{fig:PtPtResolKalman} The $p_{\perp}$ resolution vs the $p_{\perp}$ of the upstream (left) and downstream (right).}
+     \caption{\label{fig:PtPtResolKalman} The $p_{\perp}$ resolution as a function of the $p_{\perp}$ of the upstream (left) and downstream (right).}
    \end{center}
   \end{figure}
   
