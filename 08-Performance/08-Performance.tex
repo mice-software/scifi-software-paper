@@ -38,22 +38,24 @@
   
   Position residuals are shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, and the momentum residuals in figures~\ref{fig:PtResidKalman} and \ref{fig:PzResidKalman}.  The position reconstruction can be seen to agree with the Monte Carlo truth to high precision in both the upstream and downstream trackers. The momentum residuals currently display some systematic effect which is due to a known issue with the energy loss determination and is currently under study.
   
-  The position residuals are consistent with the expected measurement resolutions for a combined fit and the absolute spread is very close to the width of a channel (1.497mm). The transverse momentum resolution is consitent accross the range of the sensitive phase space at $\sim$1~MeV/c in both trackers. The longitudinal momentum, an intrinsically more difficult measurement for the tracker, still retains an acceptable spread of $\sim3$~MeV/c in both trackers. There is however a systematic offset present in the distributions, 1.5~MeV/c in the upstream tracker, and 3.5~MeV/c in the downstream, and the distributions have more pronounced tails than in the transverse cases. These offsets require further investigation.
+  In order to produce these plots, a requirement that there was a cluster within the reference plane was applied. Due to the effects of Multiple Coulomb Scattering, on rare occaisons a single hard scatter can cause pattern recognition to miss a single spacepoint at the reference plane, hence creating a tail that will adversely affect the distrubtions. As we are concerned with the resolution following a successful pattern recognition stage, these events were removed.
+  
+  The position residuals are consistent with the expected measurement resolutions for a combined fit and the absolute spread is very close to the width of a channel (1.497mm). The transverse momentum resolution is consitent accross the range of the sensitive phase space at $\sim$1~MeV/c in both trackers. The longitudinal momentum, an intrinsically more difficult measurement for the tracker, still retains an acceptable spread of $\sim2.7$~MeV/c in both trackers. There is however a systematic offset present in the distributions, $\sim0.8$~MeV/c in both trackers, and the distributions have more pronounced tails than in the transverse cases. These offsets require further investigation. It is believed that the root cause is a systematic under (over) estimation of the energy loss per plane in the upstream (downstream) tracker, which is realised in the 0.8~MeV/c longitudinal, and 0.2~MeV/c transverse, systematic offsets.
   
   Trends in transverse and longitudinal momentum resolution as a function of transverse momentum are shown in figures~\ref{fig:PtPtResolKalman} and \ref{fig:PtPzResolKalman}. A consistently uniform distribution is found in the transverse momentum as exected, with the predominant issue found in the longitudinal reconstruction of low-$P_t$ tracks. This effect, when coupled with variations in efficiency will yield some systematic concerns in the reconstruction of statistical quantities such as emittance. Studies of these systematic biases are currently underway.
 
   \begin{figure}[p]
     \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_x_residudal.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_x_residudal.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_x_residual.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_x_residual.pdf}
       \caption{\label{fig:XResidKalman} The $x$ residuals of the upstream (left) and downstream (right) trackers for a 6~mm 4D emittance, and 200~MeV/c momentum beam.}
     \end{center}
   \end{figure}
   
     \begin{figure}[p]
     \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_y_residudal.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_y_residudal.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_y_residual.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_y_residual.pdf}
       \caption{\label{fig:YResidKalman} The $y$ residuals of the upstream (left) and downstream (right) trackers for a 6~mm 4D emittance, and 200~MeV/c momentum beam.}
     \end{center}
   \end{figure}
@@ -61,16 +63,16 @@
   
   \begin{figure}[p]
     \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pt_residudal.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pt_residudal.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pt_residual.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pt_residual.pdf}
       \caption{\label{fig:PtResidKalman} The $p_{\perp}$ residuals of the upstream (left) and downstream (right).}
     \end{center}
   \end{figure}
   
    \begin{figure}[p]
     \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pz_residudal.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pz_residudal.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pz_residual.pdf}
+      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pz_residual.pdf}
       \caption{\label{fig:PzResidKalman} The $p_z$ residuals of the upstream (left) and downstream (right) trackers for a 6~mm 4D emittance, and 200~MeV/c momentum beam.}
     \end{center}
   \end{figure}
