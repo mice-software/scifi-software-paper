@@ -1,7 +1,5 @@
 \section{Geometry}
 \label{sec:Geometry}
-
-  The absolute position of each tracker station was determined by use of a coordinate measuring machine (CMM) at Imperial College London~\cite{MiceTrackers}.  The measurements were made by supporting the trackers upon blocks on the CMM. The tracker was not fixed to the supports to avoid introducing extra stresses which might distort the frame. The position of the stations was then determined with respect to station 5. (see table~\ref{tab:CMM}).
   
   \begin{table} [tbp]
   \begin{center}
@@ -25,14 +23,14 @@
     Z & -1099.9026 & -899.009 & -650.0036 & -350.0742 & 0.0 \\
     \hline
   \end{tabular}
-  \caption{\label{tab:CMM} Position of tracker stations from CMM measurements, positions taken with respect to reference surface.}
+  \caption{\label{tab:CMM} The position of the tracker stations with respect to the tracker reference surface as measured by the coordinate measuring machine.}
   \end{center}
   \end{table}
   
-  Tracker station positions are stored in the MICE configuration database (CDB). The CDB is a bi-temporal database, alterations are tracked by date and run number, ensuring the proper geometry is used in analysis of historic data.  Configurations are stored in the CDB as a collection of XML files which are translated into the native MAUS format "MICE modules", at run-time.  The MICE modules are text documents and contain all the information needed to simulate the various MICE systems and detectors. The rotation convention adopted in all the MAUS geometry is that of interpreting rotations as passive rotations of the coordinate axis, as opposed to active rotations of the geometry elements. This is done in order to stay consistent with GEANT4.
+  The position of each tracker station was determined with respect to the tracker reference surface by use of a coordinate measuring machine (see table~\ref{tab:CMM}). The station positions are stored in the MICE configuration database (CDB). The CDB is a bi-temporal database, alterations being tracked by date and run number. Information is stored in the CDB as a collection of XML files which are translated into the native MAUS format ``MICE modules'', at run-time.  The MICE modules are text documents and contain all the information needed to simulate the various MICE systems and detectors.
   
-  MAUS uses the same detector geometry descriptions for both Monte Carlo and real data and may be called on by the reconstruction as needed.  The only differences between the Monte Carlo and the real geometries relate to non-active portions of the experiment and field mapping. In particular, only the Monte Carlo geometry contains the epoxy resin, which was used in securing the individual scintillating fibres to the tracker station body, and the mylar sheets to support each doublet-layer. The carbon fibre body of the trackers have not been included in either the real or Monte Carlo geometries as their effect on the beam is expected to be minimal. The active volume of each tracker is given by a cylinder of 150~mm radius, which is used to define the fiducial volume for the reconstruction.
+  MAUS uses the same geometry descriptions for both Monte Carlo and real data, which may be called on by the reconstruction as needed. In the description of the geometry MAUS adopts a passive rotation convention to be consistent with GEANT4.  The active volume of each tracker is given by a cylinder of 150~mm radius, which is used to define the fiducial volume for the reconstruction. Alignment of the individual tracking stations and the trackers themselves to the solenoid axis has recently been completed using real data.
   
-  Alignment of the individual tracking stations and the trackers themselves to the solenoid axis will be completed using data taken during commissioning.
+  % The only differences between the Monte Carlo and the real geometries relate to non-active portions of the experiment and field mapping. In particular, only the Monte Carlo geometry contains the epoxy resin, which was used in securing the individual scintillating fibres to the tracker station body, and the mylar sheets to support each doublet-layer. The carbon fibre body of the trackers have not been included in either the real or Monte Carlo geometries as their effect on the beam is expected to be minimal.
   
   
