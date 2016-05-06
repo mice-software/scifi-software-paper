@@ -1,21 +1,22 @@
 \section{Reconstruction}
 \label{sec:Reconstruction}
-The reconstruction process begins with either real or simulated data and proceeds to reconstruct progressively higher level objects step-by-step, culminating in scifi tracks and trackpoints. Once the digits stage has been been reached the subsequent reconstruction proceeds identically for both real and simulated data, being encapsulated in one MAUS module (MapCppTrackerRecon). The reconstruction process is illustrated in figure~\ref{fig:DataFlow}. Each stage of the reconstruction is detailed in the sections below.
+The reconstruction process begins with either real or simulated data and proceeds to reconstruct progressively higher level objects step-by-step, culminating in scifi tracks and trackpoints. The digits, real or simulated, are passed to the same MAUS module (MapCppTrackerRecon) and the reconstruction proceeds identically for either case from that point. The reconstruction process is illustrated in figure~\ref{fig:DataFlow} and is detailed in the sections below.
 
 \begin{figure}[tbh]
   \begin{center}
     \includegraphics[width=0.95\linewidth]{07-Reconstruction/DataFlow2014.pdf}
-    \caption{\label{fig:DataFlow} The reconstruction data flow. Data originates either from simulated or real data, the two branches meet after digitisation, after which the reconstruction proceeds identically for both.  The relevant MAUS modules for each step are indicated.}
+    \caption{\label{fig:DataFlow} The reconstruction data flow. Data originates either from simulated or real data, the two branches merge after digitisation, after which the reconstruction proceeds identically.  The relevant MAUS modules for each step are indicated.}
   \end{center}
 \end{figure}
 
   \subsection{Digitization}
   \label{subsec:Digitization}
-  For real data the signal from the tracker ADCs is recorded by the DAQ system, including the pulse height for each channel.  Channel-by-channel calibration constants are used to convert the ADC value to a signal in terms of NPE and the DAQ channel number to tracker channel number.  This information is then used to form a digit.  The analogous process for Monte Carlo data is described in section~\ref{sec:Simulation}.
+  For real data the signal from the tracker ADCs is recorded by the DAQ system.  Channel-by-channel calibration constants are used to convert the ADC value to a signal in NPE and the DAQ channel number to tracker channel number.  This information is then used to form a digit.  The analogous process for Monte Carlo data is described in section~\ref{sec:Simulation}.
 
   \subsection{Clustering}
   \label{subsec:Clustering}
-  A particle that traverses a plane will generate a hit in one or at most two adjacent channels.  An isolated hit or hits in two adjacent channels form a cluster. The clustering algorithm loops over every combination of pairs of digits in a scifi event and combines any that occur in neighbouring channels in the same plane. In the case of multi-digit cluster, the average channel value is used. The cluster position is defined by the coordinates $(\alpha, \beta)$ where $\alpha$ and the direction of $\beta$ have been defined in section~\ref{subsec:PlaneAndClusters}. In the case of two overlapping active channels the value for $\beta$ is determined by solving:
+  A particle that traverses a plane will generate a hit in one or at most two adjacent channels.  An isolated hit or hits in two adjacent channels form a cluster. The clustering algorithm loops over every combination of pairs of digits in a scifi event and combines any that occur in neighbouring channels in the same plane. In the case of multi-digit cluster, the average channel value is used. The cluster position is defined by the coordinates $(\alpha, \beta)$ %where $\alpha$ and the direction of $\beta$ have been defined in section~\ref{subsec:PlaneAndClusters}.
+  In the case of two overlapping active channels the value for $\beta$ is determined by solving:
   
   \begin{equation}
     \begin{pmatrix}
@@ -33,13 +34,13 @@ The reconstruction process begins with either real or simulated data and proceed
   \label{subsec:SpacepointReconstruction}
   For each station the constituent planes are searched for clusters which can be used to form a spacepoint. Spacepoints are constructed from clusters from all three planes (a triplet spacepoint) or for any two out of the three planes (a doublet spacepoint). From the cluster coordinates, $(\alpha, \beta)$, the $(x, y)$ coordinates of the spacepoint are determined.
 
-  In order to determine which clusters from each plane originate from the same track Kuno's conjecture\cite{MiceTrackers} is followed, which states that for a given triplet spacepoint the sum of the channel numbers of each cluster will be a constant.  So if $n^u$, $n^v$ and $n^w$ are the fibre numbers of the clusters in $u$, $v$ and $w$ and $n^u_0$, $n^v_0$ and $n^w_0$ are the corresponding central channel numbers. Three clusters form a space point if:
+  In order to determine which clusters from each plane originate from the same track Kuno's conjecture\cite{MiceTrackers} is used, which states that for a given triplet spacepoint the sum of the channel numbers of each cluster will be a constant.  So if $n^u$, $n^v$ and $n^w$ are the fibre numbers of the clusters in $u$, $v$ and $w$ and $n^u_0$, $n^v_0$ and $n^w_0$ are the corresponding central channel numbers. Three clusters form a space point if:
   \begin{equation}
     | (n^u + n^v + n^w) - (n^u_0 + n^v_0 + n^w_0) | < K \, .
   \end{equation}
   where $K$ is a constant, take by default as 3.0.
   
-  Once all triplet spacepoints have been found, doublet spacepoints are created from pairs of remaining clusters. 
+  Once all triplet spacepoints have been found, doublet spacepoints are created from pairs of remaining clusters, the only selection criteria applied being that the crossing point of the two channels is within the tracker radius. 
 
   % \subsubsection{Crossing Point Calculation}
   % \label{subsubsec:CrossingPointCalculation}
@@ -54,9 +55,10 @@ The reconstruction process begins with either real or simulated data and proceed
 
    %The helical pattern recognition is performed in cylindrical co-ordinates $(r, \phi, z)$ where the turning angle $\phi$ defined for $0 \rightarrow \infty$ is distinguished from $\phi '$ the reduced turning angle defined for $0 \rightarrow 2\pi$. 
    
-   The helical pattern recognition is performed in cylindrical co-ordinates $(r, \phi, z)$, where $r$ is the helix radius, $\phi$ the turning angle in the transverse plane, and $z$ is the longitudinal coordinate. An additional coordinate, $s$ the distance the particle travels in the transverse plane, is also defined. The helix is them paramterised by: the circle centre $x_c$, $y_c$ and the radius, $r$, in the transverse plave; $s_0$ the value of $s$ where the helix crosses the reference plane; and $t_s = ds/dz$, which describes the tightness of the coiling. %$\phi_0$, the angle of the track as it crosses the tracker reference plane, equivalent to $s_0$, is also used. 
+   The helical pattern recognition is performed in cylindrical co-ordinates $(r, \phi, z)$, where $r$ is the helix radius, $\phi$ the turning angle in the transverse plane, and $z$ is the longitudinal coordinate. An additional coordinate, $s$ the distance the particle travels in the transverse plane, is also defined. The helix is them paramterised by: the circle centre $x_c$, $y_c$ and the radius, $r$, in the transverse plane; $s_0$ the value of $s$ where the helix crosses the reference plane; and $t_s = ds/dz$, which describes the tightness of the coiling. %$\phi_0$, the angle of the track as it crosses the tracker reference plane, equivalent to $s_0$, is also used. 
 
    To find a track one spacepoint is selected from each station and a circle is fitted in the $(r, \phi')$ projection. If the $\chi^2$ of this fit is sufficiently small (by default less than 15.0 multiplied by the number of degrees of freedom (NDF)) then the value of $\phi$ is used to generate $s$ and a straight line fit is performed in the $(z,s)$ plane, and if the $\chi^2$ in this projection is also small (by default less than 4.0 multiplied by the NDF) the track is accepted as a track candidate. Once all the different possible combinations of spacepoints have been tried the track candidate with the lowest combined $\chi^2$ from the fits is selected as the true track. Once every possible track with a spacepoint in all 5 stations has been found, the procedure is repeated looking for tracks with spacepoints in only 4 of the 5 stations. %$\phi$ itself is determined from $\phi'$ by exploiting the different distances in $z$ between successive tracker stations.  The change in $\phi$ between the hits in any two stations, divided by the distance between those stations, gives a constant which is the same for any pair of hits.  This can then be used to infer the true values of $\phi$.
+   %TODO Define small
    
    %Tracks with momentum almost parallel to the solenoid axis (i.e. with low transverse momentum, $p_T$) will not suffer an appreciable bend and will not be found by the helix search and so any spacepoints remaining after the helical tracks have been found are passed to the straight track finding algorithm.
 
@@ -65,7 +67,7 @@ The reconstruction process begins with either real or simulated data and proceed
 
     % Straight lines are fitted to the spacepoints when there is no magnetic field and on any spacepoints remaining after the helix fit is complete. The latter is to identify tracks with a small $p_T$ which are not bent sufficiently in the magnetic field to form a recognisable helix (it has been observed from Monte Carlo studies that the efficiency of the helix finding algorithm begins to tail off for tracks with $p_T < 10 MeV/c$).
 
-    The straight track finding is done in Cartesian coordinates. The track parameters are: $(x_0, y_0, t_x, t_y)$ where $x_0$, $y_0$ is the position the track crosses the tracker reference surface, $t_x = dx/dz$ and $t_y = dy/dz$. Two spacepoints are chosen in the outer stations and a road is created between them. Any spacepoints in the road are fitted in the $(x,z)$ and $(y,z)$ planes. If the $\chi^2$ of the fits is small (by default less than 4.0 multiplied by the NDF) a candidate track is formed. Once all possible spacepoint combinations have been tried the track candidate with the lowest $\chi^2$ is selected. As in the helical case, following the completion of the full 5 point track search, tracks with spacepoints in 4 out of the 5 stations are searched for. For the straight case only, following the completion of the search for 4 point tracks, a search is also made for tracks with spacepoints in only 3 out of the 5 stations. 
+    The straight track finding is done in Cartesian coordinates. The track parameters are $(x_0, y_0, t_x, t_y)$ where: $(x_0$, $y_0)$ is the position the track crosses the tracker reference surface; $t_x = dx/dz$; and $t_y = dy/dz$. Two spacepoints are chosen in the outer stations and a road is created between them. Any spacepoints in the road are fitted in the $(x,z)$ and $(y,z)$ planes. If the $\chi^2$ of the fits is small (by default less than 4.0 multiplied by the NDF) a candidate track is formed. Once all possible spacepoint combinations have been tried the track candidate with the lowest $\chi^2$ is selected. As in the helical case, following the completion of the full 5 point track search, tracks with spacepoints in 4 out of the 5 stations are searched for. For the straight case only, following the completion of the search for 4 point tracks, a search is also made for tracks with spacepoints in only 3 out of the 5 stations. 
 
    \subsection{Track Fit}
    \label{subsec:FinalTrackFit}
@@ -73,7 +75,7 @@ The reconstruction process begins with either real or simulated data and proceed
    
    For the helical track fit, the system is only approximately linear, hence an extended Kalman filter was implemented which analytically propagates the track states between measurements, while the covariance matrices are propagated using a first-order linear approximation to the non-linear system.
 
-   Pattern recognition provides a set of clusters that are associated with a track, which passed the selection criteria, and a parametrisation of that track based on a least squares fit to the points by a helix or a straight line as appropriate. The track parameters calculated from the least squares fit are used to provide the seed for the Kalman fit and the raw cluster information is used as the measurement data. The flexibility of the Kalman algorithm permits the effects of individual planes (multiple coulomb scattering (MCS) and energy loss), in addition to the material effects of the Helium gas within the tracker, to be accounted for between each measurement point.
+   Pattern recognition provides a set of clusters that are associated with a track, which passed the selection criteria, and a parameterisation of that track based on a least squares fit to the points by a helix or a straight line as appropriate. The track parameters calculated from the least squares fit are used to provide the seed for the Kalman fit and the raw cluster information is used as the measurement data. The flexibility of the Kalman algorithm permits the effects of individual planes (multiple coulomb scattering (MCS) and energy loss) and the material effects of the Helium gas within the tracker to be accounted for between each measurement point.
 
 %      \subsubsection{Kalman Filtering}
 % 
