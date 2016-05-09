@@ -15,26 +15,13 @@ The reconstruction process is illustrated in figure~\ref{fig:DataFlow} for both 
 
   \subsection{Clustering}
   \label{subsec:Clustering}
-  A particle that traverses a plane will generate a hit in one or at most two adjacent channels.  An isolated hit or hits in two adjacent channels form a cluster.  
-  
-  The clustering algorithm loops over every combination of pairs of Digits in a SciFiEvent and combines any that occur in neighbouring channels in the same plane. In the case of multi-digit cluster, the average channel value is used. The cluster positioning is defined by the coordinates $(\alpha, \beta)$ where $\alpha$ and the direction of $\beta$ have been defined in Section ~\ref{subsec:PlaneAndClusters}. The value for $\beta$ is determined by solving in the case of two overlapping active channels:
-  
-  \begin{equation}
-    \begin{pmatrix}
-     \alpha_1 \\ \beta_1
-    \end{pmatrix} = R_{1}^{-1} R_2
-    \begin{pmatrix}
-      \alpha_2 \\ \beta_2
-    \end{pmatrix}
-  \end{equation}
-  
-  \noindent
-  where $R_1$, $R_2$ are the rotation matrices that correspond to the orientation of the specified plane. 
+
+  The clustering algorithm loops over every combination of pairs of Digits in a SciFiEvent and combines any that occur in neighbouring channels in the same plane. In the case of multi-digit cluster, the average channel value is used. 
 
   \subsection{Spacepoint Reconstruction}
   \label{subsec:SpacepointReconstruction}
   For each station the constituent planes are searched for clusters which can be used to define a Spacepoint. Spacepoints are defined by Clusters from all three planes (a triplet Spacepoint) or for any two out of the three planes (a doublet Spacepoint). 
-  From the Cluster co-ordinates, $(\alpha, \beta)$, the $(x, y)$ coordinates of the Spacepoint are determined by rotating into tracker frame.
+  
 
   \subsubsection{Cluster selection}
   \label{subsubsec:ClusterSelection}
@@ -45,6 +32,22 @@ The reconstruction process is illustrated in figure~\ref{fig:DataFlow} for both 
   where $K$ is a constant, take by default as 3.0.
   
   Once all triplet space-points have been found, doublet space-points are created from pairs of remaining Clusters. 
+  
+  \subsubsection{Positioning}
+  
+  Spacepoint positioning is determined from the cluster coordinates $(\alpha, \beta)$ where $\alpha$ and the direction of $\beta$ have been defined in Section ~\ref{subsec:PlaneAndClusters}. For overlapping clusters:
+  
+  \begin{equation}
+  \begin{pmatrix}
+  \alpha_1 \\ \beta_1
+  \end{pmatrix} = R_{1}^{-1} R_2
+  \begin{pmatrix}
+  \alpha_2 \\ \beta_2
+  \end{pmatrix}
+  \end{equation}
+  
+  \noindent
+  where $R_1$, $R_2$ are the rotation matrices that correspond to the orientation of the specified plane.  Final $(x, y)$ coordinates of doublet Spacepoint are determined by rotating into tracker frame.  The three intersecting positions for a triplet are averaged together to produce the final triplet Spacepoint position.
 
   % \subsubsection{Crossing Point Calculation}
   % \label{subsubsec:CrossingPointCalculation}
