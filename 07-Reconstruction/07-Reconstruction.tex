@@ -15,24 +15,11 @@ The reconstruction process begins with either real or simulated data and proceed
 
   \subsection{Clustering}
   \label{subsec:Clustering}
-  A particle that traverses a plane will generate a hit in one or at most two adjacent channels.  An isolated hit or hits in two adjacent channels form a cluster. The clustering algorithm loops over every combination of pairs of digits in a scifi event and combines any that occur in neighbouring channels in the same plane. In the case of multi-digit cluster, the average channel value is used. The cluster position is defined by the coordinates $(\alpha, \beta)$ %where $\alpha$ and the direction of $\beta$ have been defined in section~\ref{subsec:PlaneAndClusters}.
-  In the case of two overlapping active channels the value for $\beta$ is determined by solving:
-  
-  \begin{equation}
-    \begin{pmatrix}
-     \alpha_1 \\ \beta_1
-    \end{pmatrix} = R
-    \begin{pmatrix}
-      \alpha_2 \\ \beta_2
-    \end{pmatrix}
-  \end{equation}
-  
-  \noindent
-  where $R$ is the rotation matrix that corresponds to the orientation of the specified plane. 
+  The clustering algorithm loops over every combination of pairs of digits in a scifi event and combines any that occur in neighbouring channels in the same plane. In the case of multi-digit cluster, the average channel value is used. 
 
   \subsection{Spacepoint Reconstruction}
   \label{subsec:SpacepointReconstruction}
-  For each station the constituent planes are searched for clusters which can be used to form a spacepoint. Spacepoints are constructed from clusters from all three planes (a triplet spacepoint) or for any two out of the three planes (a doublet spacepoint). From the cluster coordinates, $(\alpha, \beta)$, the $(x, y)$ coordinates of the spacepoint are determined.
+  For each station the constituent planes are searched for clusters which can be used to form a spacepoint. Spacepoints are constructed from clusters from all three planes (a triplet spacepoint) or for any two out of the three planes (a doublet spacepoint).
 
   In order to determine which clusters from each plane originate from the same track Kuno's conjecture\cite{MiceTrackers} is used, which states that for a given triplet spacepoint the sum of the channel numbers of each cluster will be a constant.  So if $n^u$, $n^v$ and $n^w$ are the fibre numbers of the clusters in $u$, $v$ and $w$ and $n^u_0$, $n^v_0$ and $n^w_0$ are the corresponding central channel numbers. Three clusters form a space point if:
   \begin{equation}
@@ -41,6 +28,20 @@ The reconstruction process begins with either real or simulated data and proceed
   where $K$ is a constant, take by default as 3.0.
   
   Once all triplet spacepoints have been found, doublet spacepoints are created from pairs of remaining clusters, the only selection criteria applied being that the crossing point of the two channels is within the tracker radius. 
+  
+    Spacepoint positioning is determined from the cluster coordinates $(\alpha, \beta)$ where $\alpha$ and the direction of $\beta$ have been defined in Section ~\ref{subsec:PlaneAndClusters}. For overlapping clusters:
+    
+    \begin{equation}
+    \begin{pmatrix}
+    \alpha_1 \\ \beta_1
+    \end{pmatrix} = R_{1}^{-1} R_2
+    \begin{pmatrix}
+    \alpha_2 \\ \beta_2
+    \end{pmatrix}
+    \end{equation}
+    
+    \noindent
+    where $R_1$, $R_2$ are the rotation matrices that correspond to the orientation of the specified plane.  Final $(x, y)$ coordinates of doublet Spacepoint are determined by rotating into tracker frame, while the three intersecting positions for a triplet are averaged together to determine final positioning.
 
   % \subsubsection{Crossing Point Calculation}
   % \label{subsubsec:CrossingPointCalculation}
@@ -76,7 +77,6 @@ The reconstruction process begins with either real or simulated data and proceed
    For the helical track fit, the system is only approximately linear, hence an extended Kalman filter was implemented which analytically propagates the track states between measurements, while the covariance matrices are propagated using a first-order linear approximation to the non-linear system.
 
    Pattern recognition provides a set of clusters that are associated with a track, which passed the selection criteria, and a parameterisation of that track based on a least squares fit to the points by a helix or a straight line as appropriate. The track parameters calculated from the least squares fit are used to provide the seed for the Kalman fit and the raw cluster information is used as the measurement data. The flexibility of the Kalman algorithm permits the effects of individual planes (multiple coulomb scattering (MCS) and energy loss) and the material effects of the Helium gas within the tracker to be accounted for between each measurement point.
-
 %      \subsubsection{Kalman Filtering}
 % 
 %      The track is modelled as a discrete state space function of $z$ (the direction of the beam), indicated by the subscript, $k$, where each tracker plane corresponds to a trackpoint and contains a measurement and a track state. Equation~\ref{equ:kalman_system_equation} describes how the true state space vector, $\mathbf{x}_{k,t}$, is assumed to propagate to a subsequent measurement plane. The matrix, $\mathbf{F}_k$, is the Kalman Propagator and describes the first order description of the propagation between measurement planes. $\mathbf{w}_k$ represents some ``process noise'', which may affect the system between the two measurement planes and is assumed to be Gaussian distributed white noise.
@@ -122,12 +122,14 @@ The reconstruction process begins with either real or simulated data and proceed
     
     The measurements correspond to individual clusters, hence the parameter $\alpha$ (see section~\ref{subsec:PlaneAndClusters}) forms a one-dimensional measurement state. The measurement noise corresponds to the statistical spread of measurements within a single channel in the tracker readout. If the channel is modelled as a top-hat function, the variance of the function is calculated as $w^2/12$, where $w$ corresponds to the width of the channel. Therefore the measurement noise was assumed to be $w/\sqrt{12}$ for all clusters.
 
-    The process noise was implemented as a combination of MCS and energy straggling. The energy loss  was is calculated using the Landau-Vavilov formula, for the most probable energy loss, and applied during the propagation stage. The noise term itself is calculated per increment, as an RMS scattering angle using an implementation of the Highland formula (equation~\ref{equ:highland_formula}), in a fashion almost identical to the GEANT4 implementation:
+    The process noise was implemented as a combination of MCS and energy straggling. The energy loss  was is calculated using the Bethe formula, for the most probable energy loss, and applied during the propagation stage. The noise term itself is calculated per increment, as an RMS scattering angle using an implementation of the Highland formula (equation~\ref{equ:highland_formula}), in a fashion almost identical to the GEANT4 implementation:
     \begin{equation}
       \theta_{RMS} = \frac{13.6\textrm{MeV/c}}{\beta c p} z \frac{x}{X_0}\left( 1 + 0.038 \ln(\frac{x}{X_0} \right)
       \label{equ:highland_formula}
     \end{equation}
     where $\theta_{RMS}$ is the RMS scattering angle through a finite length of material, $\beta c$, $p$ and $z$ are the velocity, momentum and charge of the particle in question, and $x/X_0$ represents the total path length through the material per radiation length. Although the RMS scattering angle does not form a Gaussian distribution, the first order approximation is believed to be sufficient.
+
+    In contrast to Pattern Recognition, the Kalman Filter uses a different state space model, ($x$, $p_x$, $y$, $p_y$, $\kappa=q/p_z$) rather than ($x_c$, $y_c$, $r$, $s_0$, $t_s$). This permits the energy loss and multiple coulomb scattering to be linearly modelled and implmentated using a more simple set of algorithms, hence the transverse components are more precisely modelled in this formalism. However the longitudinal components are less well modelled such that the reconstruction of $p_z$ from the final track fit is sensitive to the accuracy of the pattern recognition stage.
 
 %    \subsubsection{Goodness of fit}
 %    For each fitted track, a test statistic is computed, which is the $\chi^2$ sum over all the trackpoints. It is calculated by $\chi^2\sum_{k=0}^{k=n}\chi_k^2$ where each chisquared update is given by $\chi_{k}^{2}=\mathbf{r}_{k}^{T}\mathrm{R}_{k}^{-1}\mathbf{r}_{k}$: where $r_{k}$ is the residual computed from the filtered state vector. $r_{k}=\mathbf{m}_{k}-\mathrm{H}_{k}\mathbf{a}_{k}$: where $\mathbf{m}_{k}$ is the $k^{th}$  measured point; $\mathbf{a}_{k}$ is the best Kalman estimate of track state vector at the $k^{th}$ intersection point and $\mathrm{H}_{k}$ is the matrix which projects the state vector of the track into the measurement space. $\mathrm{R}_{k}$ is the covariance matrix of the residuals and is given by  $\mathrm{R}_{k}=\mathrm{V}_{k}-\mathrm{H}_{k}\mathrm{C}_{k}\mathrm{H}_{k}^{T}$ where $\mathrm{V}_{k}$ is the measurement covariance matrix and $\mathrm{C}_{k}$ is the projected variance matrix. This definition of  $\chi^{2}$  takes into account correlations in the measurement predictions and, combined with the number of degrees of freedom of the track fit, is used to generate a {\it p-value} for the track, which we use as a measure of fit quality.
