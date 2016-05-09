@@ -29,19 +29,20 @@ The reconstruction process begins with either real or simulated data and proceed
   
   Once all triplet spacepoints have been found, doublet spacepoints are created from pairs of remaining clusters, the only selection criteria applied being that the crossing point of the two channels is within the tracker radius. 
   
-    Spacepoint positioning is determined from the cluster coordinates $(\alpha, \beta)$ where $\alpha$ and the direction of $\beta$ have been defined in Section ~\ref{subsec:PlaneAndClusters}. For overlapping clusters:
-    
-    \begin{equation}
-    \begin{pmatrix}
-    \alpha_1 \\ \beta_1
-    \end{pmatrix} = R_{1}^{-1} R_2
-    \begin{pmatrix}
-    \alpha_2 \\ \beta_2
-    \end{pmatrix}
-    \end{equation}
-    
-    \noindent
-    where $R_1$, $R_2$ are the rotation matrices that correspond to the orientation of the specified plane.  Final $(x, y)$ coordinates of doublet Spacepoint are determined by rotating into tracker frame, while the three intersecting positions for a triplet are averaged together to determine final positioning.
+  Spacepoint positioning is determined from the cluster measurements, $\alpha$ (see section~\ref{subsec:PlaneAndClusters}) and the known plane orientations for those measurements. All clusters selected as belonging to the same spacepoint must interesect. Using two clusters the second plane coordinate $\beta$ may be calculated using knowledge of the plane orientations. This then expresses the crossing point in the $(\alpha, \beta)$ coordinate system, which can be simply rotated into the station $(x, y)$ coordinate system. In the case of a triplet spacepoint three crossing points are present, the average of which is used to define the final spacepoint position.
+
+% For overlapping clusters:
+%   
+%     \begin{equation}
+%     \begin{pmatrix}
+%     \alpha_1 \\ \beta_1
+%     \end{pmatrix} = R_{1}^{-1} R_2
+%     \begin{pmatrix}
+%     \alpha_2 \\ \beta_2
+%     \end{pmatrix}
+%     \end{equation}   
+% \noindent
+  where $R_1$, $R_2$ are the rotation matrices that correspond to the orientation of the specified plane.  Final $(x, y)$ coordinates of doublet Spacepoint are determined by rotating into tracker frame, while the three intersecting positions for a triplet are averaged together to determine final positioning.
 
   % \subsubsection{Crossing Point Calculation}
   % \label{subsubsec:CrossingPointCalculation}
@@ -117,19 +118,19 @@ The reconstruction process begins with either real or simulated data and proceed
 
 
 %     \subsubsection{The MAUS Kalman Filter Implementation}
-    In order to implement a flexible re-usable Kalman filter, the core algorithm was implemented without any dependencies on phase space dimensions or physical effects. Due to this only the system specific functionality need be provided for a complete implementation.
+    The Kalman filter was written entirely from scratch. In order to make the implementation flexible and reusable the core algorithm was implemented without any dependencies on phase space dimensions or physical effects. % Due to this only the system specific functionality need be provided for a complete implementation.
     The principal components of the implementation are: propagation routines for both helical and straight tracks; a measurement routine that correctly transforms the track state space into the measurement state space; and approximations for the process and measurement noise.
     
-    The measurements correspond to individual clusters, hence the parameter $\alpha$ (see section~\ref{subsec:PlaneAndClusters}) forms a one-dimensional measurement state. The measurement noise corresponds to the statistical spread of measurements within a single channel in the tracker readout. If the channel is modelled as a top-hat function, the variance of the function is calculated as $w^2/12$, where $w$ corresponds to the width of the channel. Therefore the measurement noise was assumed to be $w/\sqrt{12}$ for all clusters.
+    The measurements correspond to individual clusters, hence the parameter $\alpha$ (see section~\ref{subsec:PlaneAndClusters}) forms a one-dimensional measurement state. The measurement noise corresponds to the statistical spread of measurements of width $w$, within a single channel in the tracker readout. If the channel is modelled as a top-hat function, the variance of the function is $w^2/12$. Therefore the measurement noise was taken to be $w/\sqrt{12}$ for all clusters.
 
-    The process noise was implemented as a combination of MCS and energy straggling. The energy loss  was is calculated using the Bethe formula, for the most probable energy loss, and applied during the propagation stage. The noise term itself is calculated per increment, as an RMS scattering angle using an implementation of the Highland formula (equation~\ref{equ:highland_formula}), in a fashion almost identical to the GEANT4 implementation:
+    The process noise was implemented as a combination of MCS and energy straggling. The energy loss is calculated using the Bethe formula, for the most probable energy loss, and applied during the propagation stage. The noise term itself is calculated per increment, as an RMS scattering angle using an implementation of the Highland formula (equation~\ref{equ:highland_formula}), in a fashion almost identical to the GEANT4 implementation:
     \begin{equation}
-      \theta_{RMS} = \frac{13.6\textrm{MeV/c}}{\beta c p} z \frac{x}{X_0}\left( 1 + 0.038 \ln(\frac{x}{X_0} \right)
+      \theta_{RMS} = \frac{13.6\textrm{MeV/c}}{\beta c p} Z \frac{x}{X_0}\left( 1 + 0.038 \ln\left(\frac{x}{X_0} \right)\right)
       \label{equ:highland_formula}
     \end{equation}
-    where $\theta_{RMS}$ is the RMS scattering angle through a finite length of material, $\beta c$, $p$ and $z$ are the velocity, momentum and charge of the particle in question, and $x/X_0$ represents the total path length through the material per radiation length. Although the RMS scattering angle does not form a Gaussian distribution, the first order approximation is believed to be sufficient.
+    where $\theta_{RMS}$ is the RMS scattering angle through a finite length of material, $\beta c$, $p$ and $Z$ are the velocity, momentum and charge of the particle in question, x is the distance travelled and $X_0$ the radiation legthof the material. Although the RMS scattering angle does not form a Gaussian distribution, the first order approximation is believed to be sufficient.
 
-    In contrast to Pattern Recognition, the Kalman Filter uses a different state space model, ($x$, $p_x$, $y$, $p_y$, $\kappa=q/p_z$) rather than ($x_c$, $y_c$, $r$, $s_0$, $t_s$). This permits the energy loss and multiple coulomb scattering to be linearly modelled and implmentated using a more simple set of algorithms, hence the transverse components are more precisely modelled in this formalism. However the longitudinal components are less well modelled such that the reconstruction of $p_z$ from the final track fit is sensitive to the accuracy of the pattern recognition stage.
+    In contrast to Pattern Recognition, the Kalman Filter uses a different state space model, ($x$, $p_x$, $y$, $p_y$, $q/p_z$) rather than ($x_c$, $y_c$, $r$, $s_0$, $t_s$). This permits the energy loss and multiple coulomb scattering to be linearly modelled and implmentated using a more simple set of algorithms, hence the transverse components are more precisely modelled in this formalism. However the longitudinal components are less well modelled such that the reconstruction of $p_z$ from the final track fit is sensitive to the accuracy of the pattern recognition stage.
 
 %    \subsubsection{Goodness of fit}
 %    For each fitted track, a test statistic is computed, which is the $\chi^2$ sum over all the trackpoints. It is calculated by $\chi^2\sum_{k=0}^{k=n}\chi_k^2$ where each chisquared update is given by $\chi_{k}^{2}=\mathbf{r}_{k}^{T}\mathrm{R}_{k}^{-1}\mathbf{r}_{k}$: where $r_{k}$ is the residual computed from the filtered state vector. $r_{k}=\mathbf{m}_{k}-\mathrm{H}_{k}\mathbf{a}_{k}$: where $\mathbf{m}_{k}$ is the $k^{th}$  measured point; $\mathbf{a}_{k}$ is the best Kalman estimate of track state vector at the $k^{th}$ intersection point and $\mathrm{H}_{k}$ is the matrix which projects the state vector of the track into the measurement space. $\mathrm{R}_{k}$ is the covariance matrix of the residuals and is given by  $\mathrm{R}_{k}=\mathrm{V}_{k}-\mathrm{H}_{k}\mathrm{C}_{k}\mathrm{H}_{k}^{T}$ where $\mathrm{V}_{k}$ is the measurement covariance matrix and $\mathrm{C}_{k}$ is the projected variance matrix. This definition of  $\chi^{2}$  takes into account correlations in the measurement predictions and, combined with the number of degrees of freedom of the track fit, is used to generate a {\it p-value} for the track, which we use as a measure of fit quality.

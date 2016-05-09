@@ -3,9 +3,9 @@
 
   A high statistics Monte Carlo simulation was used in order to measure the reconstruction efficiency and resolution of the implemented track-finding and track-fitting algorithms. It was necessarily Monte Carlo based in order to compare the reconstructed events to the simulated truth, thereby highlighting any inefficiencies and inaccuracies within the algorithms, without any additional noise or biases.
 
-  The fitted transverse positions, $(x,y)$, and momenta, $(p_x, p_y, p_z)$, were compared to the the Monte Carlo truth on an event-by-event basis. The Monte Carlo reconstructed events were subject to the same requirements as the real data. The Monte Carlo truth data was provided by the simulated track information, stored at every tracker plane to permit a direct comparison with the reconstructed data. All comparisons were made at the tracker reference serface. %the designated measurement location with the MICE cooling channel.
+  The fitted transverse positions, $(x,y)$, and momenta, $(p_x, p_y, p_z)$, were compared to the Monte Carlo truth on an event-by-event basis. The reconstruction of the Monte Carlo data followed the same requirements that are used for the real data reconstruction. The Monte Carlo truth data was stored at every tracker plane to permit a direct comparison with the reconstructed data. All comparisons were made at the tracker reference surface. %the designated measurement location with the MICE cooling channel.
 
-  An artificial beam was generated with uniform distributions in both the longitudinal and transverse momenta. This was to ensure that the results were not biased by the incoming beam distribution, and that the full reconstructible phase space was probed with equal statistics. In order to remove unwanted non-physical particles, a cut was placed on the true Monte Carlo data during the analysis phase to eliminate tracks with a high incoming angle. Tracks with a gradient ($p_t/p_z$) greater than $0.5$ were rejected from the analysis.
+  An artificial beam was generated with uniform distributions for both the longitudinal and transverse momenta. This ensured that the results were not biased by the incoming beam distribution and that the full reconstructible phase space was probed with equal statistics. In order to remove unwanted non-physical particles, a cut was placed on the Monte Carlo truth data during the analysis phase to eliminate tracks with a high incoming angle. Tracks with a gradient ($p_t/p_z$) greater than $0.5$ were rejected from the analysis.
 
   \subsection{Track Finding Efficiency}
   \label{sec:performance:track_finding}
@@ -29,19 +29,19 @@
     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pz_tp_efficiency.pdf}\\
     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/upstream_pt_tp_efficiency.pdf}
     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pt_tp_efficiency.pdf}
-    \caption{\label{fig:tp_efficiency} The efficiency of reconstructing trackpoints in the upstream (left) and downstream (right) trackers as a function of the simulated transverse momentum.}
+    \caption{\label{fig:tp_efficiency} The efficiency of reconstructing trackpoints in the upstream (left) and downstream (right) trackers as a function of the simulated longitudinal (top) and transverse (bottom) momentum.}
   \end{figure}
 
 
   \subsection{Reconstruction Resolution}
   \label{sec:performance:resolutions}
   
-  Position residuals are shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, and the momentum residuals in figures~\ref{fig:PtResidKalman} and \ref{fig:PzResidKalman}.  The position reconstruction can be seen to agree with the Monte Carlo truth to high precision in both the upstream and downstream trackers. The momentum residuals currently display some systematic effect which is due to (a) the precise determination of energy loss within the tracker and (b) the accuracy of the pattern recognition parameters.
+  Position residuals are shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, and the momentum residuals in figures~\ref{fig:PtResidKalman} and \ref{fig:PzResidKalman}.  The position reconstruction can be seen to agree with the Monte Carlo truth to high precision in both the upstream and downstream trackers. The momentum residuals currently display some systematic effect which is due to uncertainty in the determination of energy loss within the tracker and the accuracy of the pattern recognition parameters.
 
-  The position residuals are consistent with the expected measurement resolutions for a combined fit and the absolute spread is very close to the width of a channel (1.497mm). The transverse momentum resolution is consistent across the range of the sensitive phase space at $\sim$1.2~MeV/c in both trackers. The longitudinal momentum, an intrinsically more difficult measurement for the tracker, still retains an acceptable spread of $\sim4$~MeV/c in both trackers. There is however a small ($<0.1$~MeV/c) systematic effect, visible in the momentum distributions.
+  The position residuals are consistent with the expected measurement resolutions for a combined fit and the absolute spread is very close to the width of a channel (1.497~mm). The transverse momentum resolution is consistent across the range of the sensitive phase space at $\sim$1.2~MeV/c in both trackers. The longitudinal momentum, an intrinsically more difficult measurement for the tracker, still retains an acceptable spread of ${\sim4}$~MeV/c in both trackers. There is however a small ($<0.1$~MeV/c) systematic effect, visible in the momentum distributions.
   
   The track fit assumes a simple model of energy loss based on the mean thickness of materials used in the tracker construction, however the effects of glues and resins, in addition to non-uniform density effects are not considered. This results in systematic underestimate for the energy lost at each tracker plane. Due to the high-granularity of the position information utilised by the fit, the position reconstruction is much less sensitive to this effect. Figure~\ref{fig:pBiasKalman} shows how this affects the final track fit at the reference plane.
-  \begin{figure}[h]
+  \begin{figure}[tb]
     \begin{center}
       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_p_bias_p.pdf}
       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_p_bias_p.pdf}
