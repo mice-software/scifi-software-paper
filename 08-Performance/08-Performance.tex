@@ -39,21 +39,21 @@
   Position residuals are shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, and the momentum residuals in figures~\ref{fig:PtResidKalman} and \ref{fig:PzResidKalman}.  The position reconstruction can be seen to agree with the Monte Carlo truth to high precision in both the upstream and downstream trackers. The momentum residuals currently display some systematic effect which is due to uncertainty in the determination of energy loss within the tracker and the accuracy of the pattern recognition parameters.
 
   The position residuals are consistent with the expected measurement resolutions for a combined fit and the absolute spread is very close to the width of a channel (1.497~mm). The transverse momentum resolution is consistent across the range of the sensitive phase space at $\sim$1.2~MeV/c in both trackers. The longitudinal momentum, an intrinsically more difficult measurement for the tracker, still retains an acceptable spread of ${\sim4}$~MeV/c in both trackers. There is however a small ($<0.1$~MeV/c) systematic effect, visible in the momentum distributions.
+
+  In order to produce these plots, a requirement that there was a cluster within the reference plane was applied. Due to the effects of Multiple Coulomb Scattering, on rare occasions a single hard scatter can cause pattern recognition to miss a single spacepoint at the reference plane, hence creating a tail that will adversely affect the distributions. As we are concerned with the resolution following a successful pattern recognition stage, these events were removed.
   
-  The track fit assumes a simple model of energy loss based on the mean thickness of materials used in the tracker construction, however the effects of glues and resins, in addition to non-uniform density effects are not considered. This results in systematic underestimate for the energy lost at each tracker plane. Due to the high-granularity of the position information utilised by the fit, the position reconstruction is much less sensitive to this effect. Figure~\ref{fig:pBiasKalman} shows how this affects the final track fit at the reference plane.
-  \begin{figure}[tb]
+  
+  The track fit assumes a simple model of energy loss based on the mean thickness of materials used in the tracker construction, however the effects of glues and resins, in addition to the non-uniform densities of the materials are not considered. This results in systematic underestimate for the energy lost at each tracker plane and a small sytematic bias during the pattern recognition stage, which doesn't attempt to model these effects. Due to the high-granularity of the position information utilised by the fit, the position reconstruction is much less sensitive to any discrepancies in momentum. Figure~\ref{fig:pBiasKalman} shows the mean deviation in total reconstructed momentum across the typical momentum acceptance of the trackers.
+
+  Trends in transverse and longitudinal momentum resolution as a function of transverse momentum are shown in figures~\ref{fig:PtPtResolKalman} and \ref{fig:PtPzResolKalman}. A consistently uniform distribution is found in the transverse momentum as expected, with the predominant issue found in the longitudinal reconstruction of low-$p_t$ tracks. This effect, when coupled with variations in efficiency will yield some systematic concerns in the reconstruction of statistical quantities such as emittance. Studies of these systematic biases are currently under way.
+
+  \begin{figure}[hb]
     \begin{center}
       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_p_bias_p.pdf}
       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_p_bias_p.pdf}
       \caption{\label{fig:pBiasKalman} The mean residual between the final track fit total momentum and the true track momentum, evaluated at the reference plane.}
     \end{center}
   \end{figure}
-
-  This discrepency is in part due to the accuracy of the pattern recognition parameters, and in part due to the energy loss model and is not trivial to remove. It can be well appoximately using a linear fit, and hence can be accounted for during the analysis phase, under the assumption that the Monte Carlo geometry correctly models the physical tracker.
-
-  In order to produce these plots, a requirement that there was a cluster within the reference plane was applied. Due to the effects of Multiple Coulomb Scattering, on rare occasions a single hard scatter can cause pattern recognition to miss a single spacepoint at the reference plane, hence creating a tail that will adversely affect the distributions. As we are concerned with the resolution following a successful pattern recognition stage, these events were removed.
-  
-  Trends in transverse and longitudinal momentum resolution as a function of transverse momentum are shown in figures~\ref{fig:PtPtResolKalman} and \ref{fig:PtPzResolKalman}. A consistently uniform distribution is found in the transverse momentum as expected, with the predominant issue found in the longitudinal reconstruction of low-$p_t$ tracks. This effect, when coupled with variations in efficiency will yield some systematic concerns in the reconstruction of statistical quantities such as emittance. Studies of these systematic biases are currently under way.
 
   \begin{figure}[p]
     \begin{center}
@@ -103,3 +103,4 @@
      \caption{\label{fig:PtPzResolKalman} The $p_z$ resolution vs the $p_{t}$ of the upstream (left) and downstream (right) trackers.}
    \end{center}
   \end{figure}
+
