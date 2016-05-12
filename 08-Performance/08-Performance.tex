@@ -6,6 +6,16 @@
   The fitted transverse positions, $(x,y)$, and momenta, $(p_x, p_y, p_z)$, were compared to the Monte Carlo truth on an event-by-event basis. The reconstruction of the Monte Carlo data followed the same requirements that are used for the real data reconstruction. The Monte Carlo truth data was stored at every tracker plane to permit a direct comparison with the reconstructed data. All comparisons were made at the tracker reference surface. %the designated measurement location with the MICE cooling channel.
 
   An artificial beam was generated with uniform distributions for both the longitudinal and transverse momenta. This ensured that the results were not biased by the incoming beam distribution and that the full reconstructible phase space was probed with equal statistics. In order to remove unwanted non-physical particles, a cut was placed on the Monte Carlo truth data during the analysis phase to eliminate tracks with a high incoming angle. Tracks with a gradient ($p_t/p_z$) greater than $0.5$ were rejected from the analysis.
+  
+  \subsection{Kuno's Conjecture}
+  \label{sec:performance:kunos_conjecture}
+  All clusters selected to form triplet spacepoints should follow Kuno's conjecture (section~\ref{subsec:SpacepointReconstruction}). A Kuno plot of the simulation data is shown in figure~\ref{fig:kuno}. As expected the sum of the channel numbers for all the clusters in a spacepoint is constant to very good approximation, with a small variation arising from scattering.  
+  
+    \begin{figure}[t]
+     \centering
+     \includegraphics[width=0.7\textwidth, angle=0]{08-Performance/Kuno6mm.pdf}
+     \caption{\label{fig:kuno} Kuno plot showing the sum of the channel numbers for the clusters in each spacepoint. Kuno's conjecture that the sum is a constant is observed, with a small variation due to scattering.}
+    \end{figure}
 
   \subsection{Track Finding Efficiency}
   \label{sec:performance:track_finding}
