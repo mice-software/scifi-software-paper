@@ -29,10 +29,10 @@
      id="namedview3131"
      showgrid="true"
      units="mm"
-     inkscape:window-width="1920"
-     inkscape:window-height="1027"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="1875"
+     inkscape:window-height="1056"
+     inkscape:window-x="45"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -1111,7 +1111,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1475,29 +1475,27 @@
            sodipodi:role="line">Raw Data</tspan></text>
     </g>
     <g
-       id="g4512"
-       transform="translate(9.78125,52.436763)"
-       style="stroke-width:2.83464575;stroke-miterlimit:4;stroke-dasharray:none">
+       id="g3626">
       <rect
-         ry="14"
-         y="214.09448"
-         x="140"
-         height="28"
-         width="136"
+         ry="14.147885"
+         y="266.38336"
+         x="177.96973"
+         height="28.295771"
+         width="107.95941"
          id="rect4312-28"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#008000;stroke-width:2.83464575;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#008000;stroke-width:2.5388751;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <text
          sodipodi:linespacing="125%"
          id="text4314-3"
-         y="232.09448"
-         x="150"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         y="283.37012"
+         x="189.10861"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.83464575;stroke-miterlimit:4;stroke-dasharray:none"
          xml:space="preserve"><tspan
            style="font-weight:bold;font-size:12px;-inkscape-font-specification:'Times New Roman, Bold'"
-           y="232.09448"
-           x="150"
+           y="283.37012"
+           x="189.10861"
            id="tspan4316-6"
-           sodipodi:role="line">Mapping + Calibration</tspan></text>
+           sodipodi:role="line">Real Digitisation</tspan></text>
     </g>
     <path
        style="fill:#000000;stroke:#008000;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend-3g)"

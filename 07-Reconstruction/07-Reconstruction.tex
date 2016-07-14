@@ -13,19 +13,19 @@ The reconstruction process begins with either real or simulated data and proceed
   \label{subsec:Digitization}
   For real-data the signal from the tracker ADCs is recorded by the DAQ system.  Channel-by-channel calibration constants are used to convert the ADC value to a signal in NPE and the DAQ channel number to tracker channel number.  This information is then used to form a digit.  The analogous process for Monte Carlo data is described in section~\ref{sec:Simulation}.
 
-  \subsection{Clustering}
+  \subsection{Cluster Reconstruction}
   \label{subsec:Clustering}
   The clustering algorithm loops over every combination of pairs of digits in a scifi event and combines any that occur in neighbouring channels. In the case of a multi-digit cluster, the unweighted average channel value is used to define the plane coordinate, $\alpha$, and the NPE is summed.
 
   \subsection{Spacepoint Reconstruction}
   \label{subsec:SpacepointReconstruction}
-  For each station the constituent planes are searched for clusters that can be used to form a spacepoint. Spacepoints are constructed from clusters from all three planes (a triplet spacepoint) or for any two out of the three planes (a doublet spacepoint).
+  For each station the constituent planes are searched for clusters that can be used to form a spacepoint. Spacepoints are constructed from clusters from all three planes (a triplet spacepoint) or for any two out of the three planes (a doublet spacepoint). 
 
   To determine which clusters from each plane originate from the same track, ``Kuno's conjecture''~\cite{MiceTrackers} is used: for a given triplet spacepoint the sum of the channel numbers of each cluster will be a constant.  So if $n^u$, $n^v$ and $n^w$ are the fibre numbers of the clusters in $u$, $v$ and $w$ and $n^u_0$, $n^v_0$ and $n^w_0$ are the corresponding central channel numbers. Three clusters form a space point if:
   \begin{equation}
     | (n^u + n^v + n^w) - (n^u_0 + n^v_0 + n^w_0) | < K \, .
   \end{equation}
-  where $K$ is a constant, taken by default to be 3.0.
+  where $K$ is a constant, taken by default to be 3.0. The clusters are sorted according to NPE, with higher NPE clusters being matched using Kuno's conjecture first. 
   
   Once all triplet spacepoints have been found, doublet spacepoints are created from pairs of remaining clusters, the only selection criteria applied being that the crossing point of the two channels is within the tracker radius. 
   
