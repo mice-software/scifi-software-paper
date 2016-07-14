@@ -14,7 +14,7 @@ The reconstruction code makes no direct reference to the Monte Carlo information
   \end{center}
 \end{figure}
 
-The Monte Carlo event holds data on ``scifi hits'' produced by tracks passing through the fibre planes and any noise hits originating in those planes. The scifi hit is implemented as a class based on the generic hit-class template from which all the different MICE detector-hit classes are derived (see~\cite{MausPaper}).  Other relevant data held in the Monte Carlo event, though not part of the tracker data structure, includes simulated track objects which hold the generated information on position, momentum and particle type.  Such data is used to evaluate the reconstruction performance against the generated data (see section~\ref{sec:Performance}).
+The Monte Carlo event holds data on ``scifi hits'' produced by tracks passing through the fibre planes and any noise hits originating in those planes. The scifi hit is implemented as a class based on the generic hit-class template from which all the different MICE detector-hit classes are derived (see~\cite{MausIPAC11}).  Other relevant data held in the Monte Carlo event, though not part of the tracker data structure, includes simulated track objects which hold the generated information on position, momentum and particle type.  Such data is used to evaluate the reconstruction performance against the generated data (see section~\ref{sec:Performance}).
 
 \subsection{Tracker reconstruction data structure}
 \label{subsec:TrackerReconDataStructure}
@@ -25,7 +25,7 @@ The reconstructed data for the tracker is held in the ``scifi event'' class.  Th
   \item ``Clusters'' are groups of neighbouring digits arising from a particle crossing one or two channels;
   \item ``Spacepoints'' group clusters from adjacent detector planes to give a point in space in terms of $(x, y, z)$;
   \item ``Straight pattern recognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was straight (i.e. when the enclosing  magnetic field is off); %The track parameters given in eqn.~\ref{eqn:StraightTrackParameters} are also stored;
-  \item ``Helical pattern pecognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was helical (i.e. when the magnetic enclosing field is on); %The track parameters given in eqn.~\ref{eqn:HelicalTrackParameters} are also stored;
+  \item ``Helical pattern recognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was helical (i.e. when the magnetic enclosing field is on); %The track parameters given in eqn.~\ref{eqn:HelicalTrackParameters} are also stored;
   \item ``Scifi tracks'' hold the final Kalman fit parameters of the particle track; and
   \item ``Trackpoints'', which hold the fit parameters at each detector reference plane, including the momentum and position of the track.
 \end{itemize}
