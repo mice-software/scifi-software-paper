@@ -24,13 +24,13 @@
   For every simulated event, the number of tracks expected was calculated from the Monte Carlo truth. If a simulated track crossed enough tracker planes to create a sufficient number of spacepoints (3 for straight tracks and 4 for helical tracks), a reconstructed track was expected. The parameters of the reconstructed tracks were compared to the expected track parameters. The efficiency of track finding as a function of the true longitudinal and transverse momentum is shown in figure~\ref{fig:track_efficiency}.
 
   Once the the Monte Carlo tracks have been identified, the expected number of trackpoints can be calculated by examining the number of tracker planes that the simulated track crossed. Comparing the number of trackpoints in each reconstructed track to the expected number for each simulated track permits the efficiency of finding the correct number of trackpoints to be calculated. Figure~\ref{fig:tp_efficiency} shows the trackpoint finding efficiency as a function of longitudinal and transverse momenta.
-
-
+  
   \subsection{Position and Momentum Resolution}
   \label{sec:performance:resolutions}
   
   %Position residuals are shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, and the momentum residuals in figures~\ref{fig:PtResidKalman} and \ref{fig:PzResidKalman}.  The position reconstruction can be seen to agree with the Monte Carlo truth to high precision in both the upstream and downstream trackers. The momentum residuals currently display some systematic effect which is due to uncertainty in the determination of energy loss within the tracker and the accuracy of the pattern recognition parameters.
-
+  
+  The $\chi^2$ per degree of freedom for the track fits, used to provide the position and momentum determinations, are shown in figure~\ref{fig:track_chisq}. 
   The position residuals, shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, are consistent with the expected measurement resolutions for a combined fit. The transverse momentum resolution, shown in figure~\ref{fig:PtResidKalman}, is consistent across the range of the sensitive phase-space at $\sim$0.9~MeV/c in both trackers. The longitudinal momentum shown in figure~\ref{fig:PzResidKalman}, an intrinsically more difficult measurement for the tracker, retains an acceptable spread of ${\sim4}$~MeV/c in both trackers. There is however a small systematic effect visible in the momentum distributions.
 
   In order to produce these plots, a requirement that there was a cluster within the reference plane was applied. Due to the effects of Multiple Coulomb Scattering, on rare occasions a single hard scatter can cause pattern recognition to miss a single spacepoint at the reference plane, hence creating a tail that will adversely affect the distributions. As we are concerned with the resolution following a successful pattern recognition stage, these events were removed.
@@ -57,7 +57,14 @@
     \caption{\label{fig:tp_efficiency} The efficiency of reconstructing trackpoints in the upstream (left) and downstream (right) trackers as a function of the simulated longitudinal (top) and transverse (bottom) momentum.}
   \end{figure}
   
-    \begin{figure}[p]
+  \begin{figure}[p]
+   \centering
+    \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/chi_squared_ndf_up.pdf}
+    \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/chi_squared_ndf_down.pdf}
+   \caption{\label{fig:track_chisq} The $\chi^2$ per degree of freedom in the upstream (left) and downstream (right) trackers.}
+  \end{figure}
+  
+  \begin{figure}[p]
     \begin{center}
       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_x_residual.pdf}
       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_x_residual.pdf}
