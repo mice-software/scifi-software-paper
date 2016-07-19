@@ -1,0 +1,9 @@
+MICETrackerSoftware.pdf
+*.backup
+*.tex~
+*.bbl
+*.blg
+*.aux
+*.out
+*.log
+*.kilepr
