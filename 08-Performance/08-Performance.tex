@@ -10,12 +10,6 @@
   \subsection{Kuno's Conjecture}
   \label{sec:performance:kunos_conjecture}
   
-  \begin{figure}[tb]
-     \centering
-     \includegraphics[width=0.7\textwidth, angle=0]{08-Performance/Kuno6mm.pdf}
-     \caption{\label{fig:kuno} A plot showing the sum of the channel numbers for the clusters in each spacepoint for the upstream (left) and downstream (right) trackers. Kuno's conjecture that the sum is a constant is observed, with a small variation arising from the way fibre overlap is modelled in the Monte Carlo.}
-    \end{figure}
-  
   All clusters selected to form triplet spacepoints should follow Kuno's conjecture (section~\ref{subsec:SpacepointReconstruction}). A plot showing the sum of the channel numbers for the clusters in each spacepoint is shown in figure~\ref{fig:kuno}. As expected the sum of the channel numbers for all the clusters in a spacepoint is constant to very good approximation.  The small variation arises from the fact that in real data the channels overlap by approx 1/11\,th, however, in the Monte Carlo digitiser a $50\%$ overlap is assumed. This effect is only seen when be seen when there is at least one 2-digit cluster. When only 1-digit clusters are allowed the discrepancy is removed completely.
 
   \subsection{Track Finding Efficiency}
@@ -25,12 +19,12 @@
 
   %Once the the Monte Carlo tracks have been identified, the expected number of trackpoints can be calculated by examining the number of tracker planes that the simulated track crossed. Comparing the number of trackpoints in each reconstructed track to the expected number for each simulated track permits the efficiency of finding the correct number of trackpoints to be calculated. Figure~\ref{fig:tp_efficiency} shows the trackpoint finding efficiency as a function of longitudinal and transverse momenta.
 
-
   \subsection{Position and Momentum Resolution}
   \label{sec:performance:resolutions}
   
   %Position residuals are shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, and the momentum residuals in figures~\ref{fig:PtResidKalman} and \ref{fig:PzResidKalman}.  The position reconstruction can be seen to agree with the Monte Carlo truth to high precision in both the upstream and downstream trackers. The momentum residuals currently display some systematic effect which is due to uncertainty in the determination of energy loss within the tracker and the accuracy of the pattern recognition parameters.
-
+  
+  The $\chi^2$ per degree of freedom for the track fits, used to provide the position and momentum determinations, are shown in figure~\ref{fig:track_chisq}. 
   The position residuals, shown in figures~\ref{fig:XResidKalman} and \ref{fig:YResidKalman}, are consistent with the expected measurement resolutions for a combined fit. The transverse momentum resolution, shown in figure~\ref{fig:PtResidKalman}, is consistent across the range of the sensitive phase-space at $\sim$0.9~MeV/c in both trackers. The longitudinal momentum shown in figure~\ref{fig:PzResidKalman}, an intrinsically more difficult measurement for the tracker, retains an acceptable spread of ${\sim4}$~MeV/c in both trackers. There is however a small systematic effect visible in the momentum distributions.
 
   In order to produce these plots, a requirement that there was a cluster within the reference plane was applied. Due to the effects of Multiple Coulomb Scattering, on rare occasions a single hard scatter can cause pattern recognition to miss a single spacepoint at the reference plane, hence creating a tail that will adversely affect the distributions. As we are concerned with the resolution following a successful pattern recognition stage, these events were removed.
@@ -39,84 +33,5 @@
  
   Trends in transverse and longitudinal momentum resolution as a function of transverse momentum are shown in figures~\ref{fig:PtPtResolKalman} and \ref{fig:PtPzResolKalman}. A consistently uniform distribution is found in the transverse momentum as expected, with the predominant issue found in the longitudinal reconstruction of low-$p_t$ tracks. This effect, when coupled with variations in efficiency will yield some systematic concerns in the reconstruction of statistical quantities such as emittance. Studies of these systematic biases are currently under way.
 
-  \begin{figure}[tb]
-    \centering
-    \includegraphics[width=0.495\textwidth, angle=0]{08-Performance/upstream_track_efficiency.pdf}
-    \includegraphics[width=0.495\textwidth, angle=0]{08-Performance/downstream_track_efficiency.pdf}\\
-    \caption{\label{fig:track_efficiency} The efficiency of reconstructing tracks in the upstream (left) and downstream (right) trackers as a function of the simulated longitudinal and transverse momentum.}
-  \end{figure}
-
-%   \begin{figure}[p]
-%     \centering
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/upstream_pz_track_efficiency.pdf}
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pz_track_efficiency.pdf}\\
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/upstream_pt_track_efficiency.pdf}
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pt_track_efficiency.pdf}
-%     \caption{\label{fig:track_efficiency} The efficiency of reconstructing tracks in the upstream (left) and downstream (right) trackers as a function of the simulated longitudinal (top) and transverse (bottom) momentum.}
-%   \end{figure}
-  
-%   \begin{figure}[p]
-%     \centering
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/upstream_pz_tp_efficiency.pdf}
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pz_tp_efficiency.pdf}\\
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/upstream_pt_tp_efficiency.pdf}
-%     \includegraphics[width=0.45\textwidth, angle=0]{08-Performance/downstream_pt_tp_efficiency.pdf}
-%     \caption{\label{fig:tp_efficiency} The efficiency of reconstructing trackpoints in the upstream (left) and downstream (right) trackers as a function of the simulated longitudinal (top) and transverse (bottom) momentum.}
-%   \end{figure}
-  
-    \begin{figure}[p]
-    \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_x_residual.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_x_residual.pdf}
-      \caption{\label{fig:XResidKalman} The $x$ residuals of the upstream (left) and downstream (right) trackers.}
-    \end{center}
-  \end{figure}
-  
-    \begin{figure}[p]
-    \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_y_residual.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_y_residual.pdf}
-      \caption{\label{fig:YResidKalman} The $y$ residuals of the upstream (left) and downstream (right) trackers.}
-    \end{center}
-  \end{figure} 
-  
-  \begin{figure}[p]
-    \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pt_residual.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pt_residual.pdf}
-      \caption{\label{fig:PtResidKalman} The $p_{t}$ residuals of the upstream (left) and downstream (right) trackers.}
-    \end{center}
-  \end{figure}
-  
-   \begin{figure}[p]
-    \begin{center}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pz_residual.pdf}
-      \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pz_residual.pdf}
-      \caption{\label{fig:PzResidKalman} The $p_z$ residuals of the upstream (left) and downstream (right) trackers.}
-    \end{center}
-  \end{figure}
-  
-%   \begin{figure}[p]
-%     \begin{center}
-%       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_p_bias_p.pdf}
-%       \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_p_bias_p.pdf}
-%       \caption{\label{fig:pBiasKalman} The mean residual between the final track fit total momentum and the true track momentum, evaluated at the reference plane.}
-%     \end{center}
-%   \end{figure}
-  
-  \begin{figure}[p]
-   \begin{center}
-     \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pt_resolution_pt.pdf}
-     \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pt_resolution_pt.pdf}
-     \caption{\label{fig:PtPtResolKalman} The $p_{t}$ resolution as a function of the $p_{t}$ of the upstream (left) and downstream (right) trackers.}
-   \end{center}
-  \end{figure}
-  
-  \begin{figure}[p]
-   \begin{center}
-     \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/upstream_pz_resolution_pt.pdf}
-     \includegraphics[width=0.49\textwidth, angle=0]{08-Performance/downstream_pz_resolution_pt.pdf}
-     \caption{\label{fig:PtPzResolKalman} The $p_z$ resolution vs the $p_{t}$ of the upstream (left) and downstream (right) trackers.}
-   \end{center}
-  \end{figure}
+ 
 
