@@ -5,7 +5,7 @@ import sys
 import ROOT
 
 OUTPUT_DIRECTORY = "."
-IN_FILE_NAME = "resolution_reqCluster_helix_complete.root"
+IN_FILE_NAME = "resolution_reqCluster_helix_complete_10MeVbins.root"
 
 ROOT.gROOT.SetBatch( True )
 ROOT.gStyle.SetLabelSize( 0.04, 'X' )

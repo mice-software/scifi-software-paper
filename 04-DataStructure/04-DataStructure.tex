@@ -23,11 +23,11 @@ The reconstructed data for the tracker is held in the ``scifi event'' class.  Th
 \begin{itemize}
   \item ``Digits'' contain the ADC counts (real or simulated) from the readout of a single channel in response to an incident track;
   \item ``Clusters'' are groups of neighbouring digits arising from a particle crossing one or two channels;
-  \item ``Spacepoints'' group clusters from adjacent detector planes to give a point in space in terms of $(x, y, z)$;
-  \item ``Straight pattern recognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was straight (i.e. when the enclosing  magnetic field is off); %The track parameters given in eqn.~\ref{eqn:StraightTrackParameters} are also stored;
-  \item ``Helical pattern recognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was helical (i.e. when the enclosing magnetic field is on); %The track parameters given in eqn.~\ref{eqn:HelicalTrackParameters} are also stored;
+  \item ``Spacepoints'' group clusters from adjacent detector planes to give a point in tracker coordinates;
+  \item ``Straight pattern recognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was straight (i.e. when the magnetic field is off); %The track parameters given in eqn.~\ref{eqn:StraightTrackParameters} are also stored;
+  \item ``Helical pattern recognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was helical (i.e. when the magnetic field is on); %The track parameters given in eqn.~\ref{eqn:HelicalTrackParameters} are also stored;
   \item ``Scifi tracks'' hold the final Kalman fit parameters of the particle track; and
-  \item ``Trackpoints'', which hold the fit parameters at each detector plane, including the momentum and position of the track.
+  \item ``Trackpoints'' hold the fit parameters at each detector plane, including the momentum and position of the track.
 \end{itemize}
 
 Each of these objects is stored directly in the scifi event object (the event ``owns'' the required memory), with the exception of trackpoints which are stored in the associated scifi tracks.  Each higher-level object also contains cross links in the form of pointers back to the objects within the scifi event which were used to create it. In this manner all higher-level objects can be traced back to the original digits.  In the case of a Monte Carlo run the digits themselves are linked via an ID number and lookup table back to the scifi hits used to produce them. The ID is defined as \textit{tspc}, where \textit{t} is the tracker number, \textit{s} is the station number, \textit{p} is the plane number and \textit{c} is the channel number (given with three numerals e.g. 010 for channel 10).  This structure means the reconstruction branch has no direct reference to the Monte Carlo data.
