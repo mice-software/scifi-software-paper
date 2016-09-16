@@ -21,7 +21,7 @@ The Monte Carlo event holds data on ``scifi hits'' produced by tracks passing th
 The reconstructed data for the tracker is held in the ``scifi event'' class.  This contains vectors of the following container classes that represent the higher-level reconstructed tracker-data:
 
 \begin{itemize}
-  \item ``Digits'' contain the ADC counts (real or simulated) from the readout of a single channel in response to an incident track;
+  \item ``Digits'' contain the analogue-to-digital converter (ADC) counts (real or simulated) from the readout of a single channel in response to an incident track;
   \item ``Clusters'' are groups of neighbouring digits arising from a particle crossing one or two channels;
   \item ``Spacepoints'' group clusters from adjacent detector planes to give a point in tracker coordinates;
   \item ``Straight pattern recognition tracks'' group together spacepoints from different tracker stations when the track that introduced the hits was straight (i.e. when the magnetic field is off); %The track parameters given in eqn.~\ref{eqn:StraightTrackParameters} are also stored;
