@@ -27,9 +27,7 @@ The reconstruction process begins with either real or simulated data and proceed
   \end{equation}
   where $K$ is a constant, taken by default to be 3.0. The clusters are sorted according to NPE, with higher NPE clusters being matched using Kuno's conjecture first. 
   
-  Once all triplet spacepoints have been found, doublet spacepoints are created from pairs of the clusters that remain, the only selection criterion applied being that the crossing point of the two channels is within the tracker radius. 
-
-  Spacepoint positioning is determined from the cluster measurements, $\alpha$ (see section~\ref{subsec:PlaneAndClusters}) and the known plane orientations for those measurements. All clusters selected as belonging to the same spacepoint must interesect. Using two clusters, the second plane coordinate $\beta$ may be calculated using knowledge of the plane orientations. This then expresses the crossing point in the plane coordinate system, which can be simply rotated into the station $(x, y)$ coordinate system. %In the case of a triplet spacepoint three crossing points are present, the average of which is used to define the final spacepoint position.
+  Once all triplet spacepoints have been found, doublet spacepoints are created from pairs of the clusters that remain, the only selection criterion applied being that the crossing point of the two channels is within the tracker radius. Spacepoint position is determined from the cluster measurements, $\alpha$ (see section~\ref{subsec:PlaneAndClusters}) and the known plane orientations for those measurements. %All clusters selected as belonging to the same spacepoint must interesect. Using two clusters, the second plane coordinate $\beta$ may be calculated using knowledge of the plane orientations. This then expresses the crossing point in the plane coordinate system, which can be simply rotated into the station $(x, y)$ coordinate system. %In the case of a triplet spacepoint three crossing points are present, the average of which is used to define the final spacepoint position.
 
 
 % For overlapping clusters:
