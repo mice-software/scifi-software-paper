@@ -14,7 +14,7 @@ The reconstruction code makes no direct reference to the Monte Carlo information
   \end{center}
 \end{figure}
 
-The Monte Carlo event holds data on ``scifi hits'' produced by tracks passing through the fibre planes and any noise hits originating in those planes. The scifi hit is implemented as a class based on the generic hit-class template from which all the different MICE detector-hit classes are derived (see~\cite{MausIPAC11}).  Other relevant data held in the Monte Carlo event, though not part of the tracker data structure, include the simulated tracks and ``virtual hits'' which contain information of the track state at their location. Such data is used to evaluate the reconstruction performance against the original simulated data (see section~\ref{sec:Performance}).
+The Monte Carlo event holds data on ``scifi hits'' produced by tracks passing through the fibre planes and any noise hits originating in those planes. The scifi hit is implemented as a class based on the generic hit-class template from which all the different MICE detector-hit classes are derived.  Other relevant data held in the Monte Carlo event, though not part of the tracker data structure, include the simulated tracks and ``virtual hits'' which contain information of the track state at their location. Such data is used to evaluate the reconstruction performance against the original simulated data (see section~\ref{sec:Performance}).
 
 \subsection{Tracker reconstruction data structure}
 \label{subsec:TrackerReconDataStructure}
