@@ -116,7 +116,7 @@ The reconstruction process begins with either real or simulated data and proceed
 
 %     \subsubsection{The MAUS Kalman Filter Implementation}
 
-    The Kalman filter was written from scratch. In order to make the implementation flexible and re-usable the core algorithm was implemented without any dependencies on phase-space dimensions or physical effects. % Due to this only the system specific functionality need be provided for a complete implementation.
+    A MAUS-specific implementation of the Kalman filter has been developed. In order to make the implementation flexible and re-usable the core algorithm has no dependencies on phase-space dimensions or physical effects. % Due to this only the system specific functionality need be provided for a complete implementation.
     The principal components of the implementation are: propagation routines for both helical and straight-tracks; a measurement routine that transforms the track state-space into the measurement state-space; and approximations for the process and measurement noise.
     
     Pattern recognition provides a set of clusters that are associated with a track, together with the fitted parameters of the track. These parameters are used to provide the seed for the Kalman fit and the cluster information is used as the measurement data. The flexibility of the Kalman algorithm permits the effects of individual planes (multiple Coulomb scattering and energy loss) and the effect of the helium gas within the tracker to be accounted for between each measurement point.
@@ -126,7 +126,7 @@ The reconstruction process begins with either real or simulated data and proceed
     The process noise was implemented as a combination of multiple Coulomb scattering and energy straggling. The energy loss is calculated using the Bethe formula~\cite{PDG}, for the most probable energy loss, and applied during the propagation stage. The noise term itself is calculated per increment as an RMS scattering angle using an implementation of the Highland formula~\cite{Highland}, in a fashion almost identical to the GEANT4 implementation:
 
     \begin{equation}
-      \theta_{RMS} = \frac{13.6\textrm{MeV/c}}{\beta c p} Z \frac{x}{X_0}\left( 1 + 0.038 \ln\left(\frac{x}{X_0} \right)\right);
+      \theta_{RMS} = \frac{13.6\ \textrm{MeV/c}}{\beta c p} Z \frac{x}{X_0}\left( 1 + 0.038 \ln\left(\frac{x}{X_0} \right)\right);
       \label{equ:highland_formula}
     \end{equation}
     where $\theta_{RMS}$ is the RMS scattering angle through a finite length of material, $\beta c$, $p$ and $Z$ are the velocity, momentum and charge of the particle in question, $x$ is the distance travelled and $X_0$ the radiation length of the material. Although the RMS scattering angle does not form a Gaussian distribution, the first order approximation is believed to be sufficient.
