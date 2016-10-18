@@ -1,1 +1,0 @@
-# scifi-software-paper
