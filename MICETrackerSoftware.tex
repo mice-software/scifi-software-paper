@@ -1,30 +1,37 @@
-\documentclass{99-Styles/MICE}
-\usepackage{bm} % For formatting math mode in bold
+\documentclass[a4paper,11pt]{article}
+\pdfoutput=1
+\usepackage{jinstpub} 
+\usepackage{bm}
 \usepackage{amsmath}
 \usepackage{graphicx}
-
 \usepackage{float}
 \floatstyle{plaintop}
 \restylefloat{table}
 \usepackage[tableposition=top]{caption}
 
-%
-\input 99-Styles/GetPackages
+\title{The reconstruction software for the MICE scintillating fibre trackers}
 
-%\linenumbers
-%\modulolinenumbers[5]
+% Auhtor list
+% The "\note" macro will give a warning: "Ignoring empty anchor..." you can safely ignore it.
+\author[a,1]{A. Dobbs,\note{Corresponding author.}}
+\author[a]{C. Hunt}
+\author[a]{K. Long}
+\author[a]{E. Santos\note{Now at Winton Capital Management}}
+\author[a]{M. A. Uchida}
+\author[b]{P. Kyberd}
+\author[c]{C. Heidt}
+\author[d]{S. Blot\note{Now at Deutsches Elektronen-Synchrotron}}
+\author[e]{E. Overton}
+
+\affiliation[a]{Imperial College London,\\Exhibition Road, London, SW7 2AZ, UK}
+\affiliation[b]{Brunel University London, Kingston Lane, Uxbridge, Middlesex, UB8 3PH, U.K.}
+\affiliation[c]{University of California Riverside, 900 University Ave, Riverside, CA 92521, U.S.A.}
+\affiliation[d]{University of Chicago, Edward H. Levi Hall, 5801 South Ellis Avenue, Chicago, Illinois, U.S.A.}
+\affiliation[e]{University of Sheffield, Western Bank, Sheffield, S10 2TN, U.K.}
+
+\emailAdd{adobbs@imperial.ac.uk}
+
 \begin{document}
-
-\input 00a-Top-matter/00a-Top-matter
-
-%\makeatletter
-
-\input 99-Styles/MICE-defs
-
-\parindent 10pt
-\pagestyle{plain}
-\pagenumbering{arabic}                   
-\setcounter{page}{1}
 
 \input 00b-Abstract/00b-Abstract
 \input{01-MICE/01-MICE.tex}
@@ -37,14 +44,6 @@
 \input{08-Performance/08-Performance.tex}
 \input{09-Conclusion/09-Conclusion.tex}
 \input{10-Acknowledgements/10-Acknowledgements.tex}
-
-%\clearpage
-
 \bibliography{mice}                                                                           
-\bibliographystyle{99-Styles/utphys}
-
-
-% \cleardoublepage
-% \appendix
 
 \end{document}
