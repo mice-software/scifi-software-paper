@@ -4,30 +4,30 @@
 \usepackage{bm}
 \usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage{float}
-\floatstyle{plaintop}
-\restylefloat{table}
-\usepackage[tableposition=top]{caption}
+%\usepackage{float}
+%\floatstyle{plaintop}
+%\restylefloat{table}
+%\usepackage[tableposition=top]{caption}
 
 \title{The reconstruction software for the MICE scintillating fibre trackers}
 
 % Auhtor list
 % The "\note" macro will give a warning: "Ignoring empty anchor..." you can safely ignore it.
-\author[a,1]{A. Dobbs,\note{Corresponding author.}}
-\author[a]{C. Hunt}
-\author[a]{K. Long}
-\author[a]{E. Santos\note{Now at Winton Capital Management}}
-\author[a]{M. A. Uchida}
-\author[b]{P. Kyberd}
-\author[c]{C. Heidt}
-\author[d]{S. Blot\note{Now at Deutsches Elektronen-Synchrotron}}
-\author[e]{E. Overton}
+\author[a,1]{A.~Dobbs,\note{Corresponding author.}}
+\author[a]{C.~Hunt}
+\author[a]{K.~Long}
+\author[a]{E.~Santos\note{Now at Winton Capital Management.}}
+\author[a]{M.~A.~Uchida}
+\author[b]{P.~Kyberd}
+\author[c]{C.~Heidt}
+\author[d]{S.~Blot\note{Now at Deutsches Elektronen-Synchrotron.}}
+\author[e]{E.~Overton}
 
 \affiliation[a]{Imperial College London,\\Exhibition Road, London, SW7 2AZ, UK}
-\affiliation[b]{Brunel University London, Kingston Lane, Uxbridge, Middlesex, UB8 3PH, U.K.}
-\affiliation[c]{University of California Riverside, 900 University Ave, Riverside, CA 92521, U.S.A.}
-\affiliation[d]{University of Chicago, Edward H. Levi Hall, 5801 South Ellis Avenue, Chicago, Illinois, U.S.A.}
-\affiliation[e]{University of Sheffield, Western Bank, Sheffield, S10 2TN, U.K.}
+\affiliation[b]{Brunel University London,\\Kingston Lane, Uxbridge, Middlesex, UB8 3PH, U.K.}
+\affiliation[c]{University of California Riverside,\\900 University Ave, Riverside, CA 92521, U.S.A.}
+\affiliation[d]{University of Chicago,\\Edward H. Levi Hall, 5801 South Ellis Avenue, Chicago, Illinois, U.S.A.}
+\affiliation[e]{University of Sheffield,\\Western Bank, Sheffield, S10 2TN, U.K.}
 
 \emailAdd{adobbs@imperial.ac.uk}
 
@@ -41,7 +41,6 @@
 \maketitle
 \flushbottom
 
-\input 00b-Abstract/00b-Abstract
 \input{01-MICE/01-MICE.tex}
 \input{02-CoordinateSystems/02-CoordinateSystems.tex}
 \input{03-MAUS/03-MAUS.tex}
@@ -52,6 +51,8 @@
 \input{08-Performance/08-Performance.tex}
 \input{09-Conclusion/09-Conclusion.tex}
 \input{10-Acknowledgements/10-Acknowledgements.tex}
+
+\bibliographystyle{plain}
 \bibliography{mice}                                                                           
 
 \end{document}
